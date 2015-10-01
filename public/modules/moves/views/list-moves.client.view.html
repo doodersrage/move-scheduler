@@ -1,0 +1,19 @@
+<section data-ng-controller="MovesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Moves</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="move in moves" data-ng-href="#!/moves/{{move._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="move.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="move.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="move.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!moves.$resolved || moves.length">
+    	No Moves yet, why don't you <a href="/#!/moves/create">create one</a>?
+    </div>
+</section>
