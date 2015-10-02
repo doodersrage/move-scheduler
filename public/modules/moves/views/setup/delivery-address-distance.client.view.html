@@ -1,0 +1,41 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+  		<p>
+        How long will it take to drive from your<br>
+        current address to the delivery address?
+  		</p>
+      <p style="text-align:center">
+        In minutes:
+      </p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="5">
+            5
+          </label>
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="10">
+            10
+          </label>
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="15">
+            15
+          </label>
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="20">
+            20
+          </label>
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="30">
+            30
+          </label>
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="45">
+            45
+          </label>
+          <label class="btn btn-primary" ng-model="move.deliveryAddressDistance" btn-radio="60">
+            60
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.deliveryAddressDistance">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.destinationAddressDistance">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+  		<p>
+        Please enter the zip code<br>
+        for your ultimate destination.
+  		</p>
+      <input type="text" data-ng-model="move.destinationZip" id="zip" class="form-control" placeholder="zip" autocomplete="off" required>
+      <p style="text-align:center">
+        Not sure? Estimate the time it.<br>
+        In minutes:
+      </p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="5">
+            5
+          </label>
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="10">
+            10
+          </label>
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="15">
+            15
+          </label>
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="20">
+            20
+          </label>
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="30">
+            30
+          </label>
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="45">
+            45
+          </label>
+          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="60">
+            60
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationZip">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.toBeMoved">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>

@@ -1,8 +1,8 @@
 'use strict';
 
 // Moves controller
-angular.module('moves').controller('MovesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Moves',
-	function($scope, $stateParams, $location, Authentication, Moves ) {
+angular.module('moves').controller('MovesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Moves', '$state',
+	function($scope, $stateParams, $location, Authentication, Moves, $state ) {
 		$scope.authentication = Authentication;
 
 		// Create new Move
@@ -57,9 +57,31 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		// Find existing Move
 		$scope.findOne = function() {
-			$scope.move = Moves.get({ 
+			$scope.move = Moves.get({
 				moveId: $stateParams.moveId
 			});
 		};
+
+		// custom functions based on client requests
+		$scope.nextStep = function(step){
+
+			// apply correct step methods based on assigned step string
+			switch(step){
+				case 'moveTypeDate':
+
+					// add code to check availability here
+
+					// call correct state
+					$state.go('setupMove.available');
+
+				break;
+			}
+
+		};
+
+		$scope.delayRedirect = function(seconds,state){
+			setTimeout($state.go(state), (Number(seconds) * 10000));
+		};
+
 	}
 ]);

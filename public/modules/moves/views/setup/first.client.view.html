@@ -6,28 +6,28 @@
 		<p>
       Let’s make sure we are available.
 		</p>
-    <p>
-      I would like to book a…
-    </p>
-    <p>
-      <a class="btn btn-primary btn-lg" ng-model="moveSel" ng-click="setMove('xsmall')" ui-sref="setupMove.p3">
-        X-Small Move<br>
-        1-6 Pieces
-      </a>
-      <a class="btn btn-primary btn-lg" ng-model="moveSel" ng-click="setMove('small')" ui-sref="setupMove.p3">
-        Small Move<br>
-        400-800 Sq. Feet
-      </a>
-      <a class="btn btn-primary btn-lg" ng-model="moveSel" ng-click="setMove('medium')" ui-sref="setupMove.p3">
-        Medium Move<br>
-        800-1600 Sq. Feet
-      </a>
-      <a class="btn btn-primary btn-lg" ng-model="moveSel" ng-click="setMove('large')" ui-sref="setupMove.p3">
-        Large Move<br>
-        1700-2600 Sq. Feet
-      </a>
-    </p>
-    <p>
+		    <label>
+		      I would like to book a…
+		    </label><br>
+				<div class="btn-group" data-toggle="buttons">
+		        <label class="btn btn-primary" ng-model="move.moveType" btn-radio="'xsmall'">
+							X-Small Move<br>
+		        	1-6 Pieces
+						</label>
+						<label class="btn btn-primary" ng-model="move.moveType" btn-radio="'small'">
+							Small Move<br>
+			        400-800 Sq. Feet
+						</label>
+						<label class="btn btn-primary" ng-model="move.moveType" btn-radio="'medium'">
+							Medium Move<br>
+			        800-1600 Sq. Feet
+						</label>
+						<label class="btn btn-primary" ng-model="move.moveType" btn-radio="'large'">
+							Large Move<br>
+			        1700-2600 Sq. Feet
+						</label>
+		    </div>
+    </label><br>
       On, before or after
     </p>
     <div class="input-group">
@@ -35,9 +35,9 @@
         <input type="text" class="form-control" data-ng-model="move.date" readonly>
     </div>
     <div class="input-group">
-      <datetimepicker data-ng-model="move.date" data-datetimepicker-config="{ minuteStep: 30, dropdownSelector: '#dropdown2' }"/>
+      <datetimepicker data-ng-model="move.date" data-datetimepicker-config="{ minuteStep: 30 }"/>
     </div>
-    <p style="text-align:right">
+    <p style="text-align:right" ng-show="move.moveType && move.date">
       <a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
         Next Step
       </a>

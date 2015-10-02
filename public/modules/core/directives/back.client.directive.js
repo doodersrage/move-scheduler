@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('core').directive('back', ['$window', function($window) {
     return {
         restrict: 'A',

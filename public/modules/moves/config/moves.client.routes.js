@@ -46,6 +46,11 @@ angular.module('moves').config(['$stateProvider',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/delivery-address-distance.client.view.html'
 		}).
+		state('setupMove.destinationAddressDistance', {
+			url: '/destination-address-distance',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/destination-address-distance.client.view.html'
+		}).
 		state('setupMove.toBeMoved', {
 			url: '/to-be-moved',
 			parent: 'setupMove',

@@ -1,0 +1,16 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+  		<p>
+        Enter your zip code<br>
+         at the starting address.
+  		</p>
+      <input type="text" data-ng-model="move.startZip" id="zip" class="form-control" placeholder="zip" autocomplete="off" required>
+    </div>
+    <p style="text-align:right" ng-show="move.startZip">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.deliveryAddressDistance">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>
