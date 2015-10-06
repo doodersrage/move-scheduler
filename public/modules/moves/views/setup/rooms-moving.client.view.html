@@ -1,0 +1,55 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+  		<p>
+        Excluding bath, laundry and storage,<br>
+       how many rooms are we moving?<br>
+      <small>(If you only want us to move the big stuff click <a ui-sref="setupMove.bigStuff"><b><u>BIG STUFF</u></b></a>)<br>
+      (Partial rooms with 2-3 things can be combined into a whole</small>
+  		</p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="1">
+            1
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="2">
+            2
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="3">
+            3
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="4">
+            4
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="5">
+            5
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="6">
+            6
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="7">
+            7
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="8">
+            8
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="9">
+            9
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="10">
+            10
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="11">
+            11
+          </label>
+          <label class="btn btn-primary" ng-model="move.roomsMoving" btn-radio="12">
+            12
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.roomsMoving">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.appliances">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>

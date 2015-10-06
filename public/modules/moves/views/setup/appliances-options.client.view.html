@@ -1,0 +1,28 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+  		<p>
+        Click any that apply.
+  		</p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.appliances['Refrigerator']" btn-checkbox>
+            Refrigerator
+          </label>
+          <label class="btn btn-primary" ng-model="move.appliances['Washer/Dryer']" btn-checkbox>
+            Washer/Dryer
+          </label>
+          <label class="btn btn-primary" ng-model="move.appliances['other']" btn-checkbox>
+            other
+          </label>
+          <label class="btn btn-primary" ng-model="move.appliances['Garage fridge or freezer']" btn-checkbox>
+            Garage fridge or freezer
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.appliances">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.attic">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>

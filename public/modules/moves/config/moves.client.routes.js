@@ -106,6 +106,11 @@ angular.module('moves').config(['$stateProvider',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/few-things.client.view.html'
 		}).
+		state('setupMove.oneMoreThing', {
+			url: '/one-more-thing',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/one-more-thing.client.view.html'
+		}).
 		state('setupMove.roomsMoving', {
 			url: '/rooms-moving',
 			parent: 'setupMove',
@@ -116,6 +121,11 @@ angular.module('moves').config(['$stateProvider',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/moving-type.client.view.html'
 		}).
+		state('setupMove.bigStuff', {
+			url: '/big-stuff',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/big-stuff.client.view.html'
+		}).
 		state('setupMove.appliances', {
 			url: '/appliances',
 			parent: 'setupMove',
@@ -125,6 +135,16 @@ angular.module('moves').config(['$stateProvider',
 			url: '/appliances-options',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/appliances-options.client.view.html'
+		}).
+		state('setupMove.attic', {
+			url: '/attic',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/attic.client.view.html'
+		}).
+		state('setupMove.atticOptions', {
+			url: '/attic-options',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/attic-options.client.view.html'
 		}).
 		state('setupMove.storageRooms', {
 			url: '/storage-rooms',

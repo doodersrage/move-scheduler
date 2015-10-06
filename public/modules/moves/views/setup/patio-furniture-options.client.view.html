@@ -1,0 +1,22 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <p style="text-align:center">
+        How would you describe the amount we are moving?
+      </p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.patioFurniture" btn-radio="'Grill and patio furniture'">
+            Grill and patio furniture
+          </label>
+          <label class="btn btn-primary" ng-model="move.patioFurniture" btn-radio="'Grill, patio furniture, bird bath, chiminea etc'">
+            Grill, patio furniture, bird bath, chiminea etc
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.patioFurniture">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.disassembly">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>

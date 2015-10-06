@@ -1,0 +1,28 @@
+<section data-ng-controller="HomeController">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <p style="text-align:center">
+        How would you describe the amount we are moving?
+      </p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.shed" btn-radio="'light yard stuff'">
+            light yard stuff
+          </label>
+          <label class="btn btn-primary" ng-model="move.shed" btn-radio="'yard stuff and some storage'">
+            yard stuff and some storage
+          </label>
+          <label class="btn btn-primary" ng-model="move.shed" btn-radio="'yard stuff, boxes plus bikes and toys'">
+            yard stuff, boxes plus bikes and toys
+          </label>
+          <label class="btn btn-primary" ng-model="move.shed" btn-radio="'Its full. bikes lawnmowers, ladders and canoes'">
+            Its full. bikes lawnmowers, ladders and canoes
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.shed">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.patioFurniture">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>
