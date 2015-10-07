@@ -146,16 +146,6 @@ angular.module('moves').config(['$stateProvider',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/attic-options.client.view.html'
 		}).
-		state('setupMove.storageRooms', {
-			url: '/storage-rooms',
-			parent: 'setupMove',
-			templateUrl: 'modules/moves/views/setup/storage-rooms.client.view.html'
-		}).
-		state('setupMove.storageRoomsOptions', {
-			url: '/storage-rooms-options',
-			parent: 'setupMove',
-			templateUrl: 'modules/moves/views/setup/storage-rooms-options.client.view.html'
-		}).
 		state('setupMove.basement', {
 			url: '/basement',
 			parent: 'setupMove',

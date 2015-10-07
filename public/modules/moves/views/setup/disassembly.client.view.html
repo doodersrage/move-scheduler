@@ -1,0 +1,35 @@
+<section data-ng-controller="MovesController">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <p style="text-align:center">
+        Is there anything that will<br>
+        require extra assembly/disassembly?
+      </p>
+      <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary" ng-model="move.disassembly['Ikea bed']" btn-checkbox>
+            Ikea bed
+          </label>
+          <label class="btn btn-primary" ng-model="move.disassembly['bunk beds']" btn-checkbox>
+            bunk beds
+          </label>
+          <label class="btn btn-primary" ng-model="move.disassembly['cribs']" btn-checkbox>
+            cribs
+          </label>
+          <label class="btn btn-primary" ng-model="move.disassembly['washer/dryer hookup']" btn-checkbox>
+            washer/dryer hookup
+          </label>
+          <label class="btn btn-primary" ng-model="move.disassembly['other']" btn-checkbox>
+            other
+          </label>
+          <label class="btn btn-primary" ui-sref="setupMove.estimate" btn-checkbox>
+            none
+          </label>
+      </div>
+    </div>
+    <p style="text-align:right" ng-show="move.disassembly">
+      <a class="btn btn-primary btn-lg" ui-sref="setupMove.extDisassemblyHours">
+        Next Step
+      </a>
+    </p>
+  </div>
+</section>

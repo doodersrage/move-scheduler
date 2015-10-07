@@ -1,0 +1,22 @@
+<section data-ng-controller="MovesController">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <p style="text-align:center">
+        Enter your email to save your progress.  We will send you<br>
+        a bookmark that will allow you to pickup where<br>
+        you left off.  Availability may change.<br>
+        This is not a reservation<br>
+        <small>email is used for no other purpose than sending your bookmark</small>
+      </p>
+      <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" ng-model="move.email" id="move.email" placeholder="Email">
+        </div>
+        <button class="btn btn-primary btn-lg">
+          Save
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
