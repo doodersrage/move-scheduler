@@ -1,8 +1,12 @@
-<section data-ng-init="">
+<section>
     <div class="page-header">
         <h1>Lets Plan Your Move</h1>
     </div>
     <div class="col-md-12" style="padding-bottom:75px">
+      <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <fieldset>
           <div id="form-view" ui-view></div>
+        </fieldset>
+      </form>
     </div>
 </section>

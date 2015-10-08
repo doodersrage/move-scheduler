@@ -5,6 +5,54 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 	function($scope, $stateParams, $location, Authentication, Moves, $state ) {
 		$scope.authentication = Authentication;
 
+		// controller vars
+		// init new move object
+		$scope.move = {
+			moveType: '',
+			startZip: '',
+			destinationZip: '',
+			destinationAddressDistance: '',
+			appliances: [],
+			attic: '',
+			basement: '',
+			bigStuff: '',
+			deliveryAccess: '',
+			deliveryAddressDistance: '',
+			disassembly: [],
+			garage: '',
+			movingToType: '',
+			patioFurniture: '',
+			shed: '',
+			tobemoved: '',
+			primaryAccess: '',
+			roomsMoving: '',
+			email: ''
+		};
+
+		// keypad settings
+		$scope.vm = this;
+
+		$scope.onKeyPressed = function(data) {
+      if (data == '<') {
+          $scope.move.startZip = $scope.move.startZip.slice(0, $scope.move.startZip.length - 1);
+      } else {
+          $scope.move.startZip += data;
+      }
+    };
+
+		$scope.onKeyPressedDest = function(data) {
+      if (data == '<') {
+          $scope.move.destinationZip = $scope.move.destinationZip.slice(0, $scope.move.destinationZip.length - 1);
+      } else {
+          $scope.move.destinationZip += data;
+      }
+    };
+
+    $scope.vm.valor = '';
+    $scope.vm.keys = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+		$scope.vm.onKeyPressed = $scope.onKeyPressed;
+		$scope.vm.onKeyPressedDest = $scope.onKeyPressedDest;
+
 		// Create new Move
 		$scope.create = function() {
 			// Create new Move object

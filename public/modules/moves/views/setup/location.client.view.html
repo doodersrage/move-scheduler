@@ -1,11 +1,18 @@
-<section data-ng-controller="MovesController">
   <div class="row">
     <div class="jumbotron text-center">
   		<p>
         Enter your zip code<br>
          at the starting address.
   		</p>
-      <input type="text" data-ng-model="move.startZip" id="zip" class="form-control" placeholder="zip" autocomplete="off" required>
+      <input type="text" maxlength="5" data-ng-model="move.startZip" id="move.startZip" class="form-control" placeholder="zip" autocomplete="off" required>
+      <div class='container ios'>
+          <ng-keypad on-key-pressed='vm.onKeyPressed'>
+              <ng-key ng-repeat='key in vm.keys' ng-key-data='key'>{{key}}</ng-key>
+              <ng-key class='empty'></ng-key>
+              <ng-key ng-key-data='0'>0</ng-key>
+              <ng-key class='empty' ng-key-data='"<"'>del</ng-key>
+          </ng-keypad>
+      </div>
     </div>
     <p style="text-align:right" ng-show="move.startZip">
       <a class="btn btn-primary btn-lg" ui-sref="setupMove.deliveryAddressDistance">
@@ -13,4 +20,3 @@
       </a>
     </p>
   </div>
-</section>

@@ -1,37 +1,46 @@
-<section data-ng-controller="MovesController">
   <div class="row">
     <div class="jumbotron text-center">
   		<p>
         Please enter the zip code<br>
         for your ultimate destination.
   		</p>
-      <input type="text" data-ng-model="move.destinationZip" id="zip" class="form-control" placeholder="zip" autocomplete="off" required>
-      <p style="text-align:center">
-        Not sure? Estimate the time it.<br>
-        In minutes:
-      </p>
-      <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="5">
-            5
-          </label>
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="10">
-            10
-          </label>
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="15">
-            15
-          </label>
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="20">
-            20
-          </label>
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="30">
-            30
-          </label>
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="45">
-            45
-          </label>
-          <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="60">
-            60
-          </label>
+      <input type="text" maxlength="5" data-ng-model="move.destinationZip" id="move.destinationZip" class="form-control" placeholder="zip" autocomplete="off" required>
+      <div class='container ios'>
+          <ng-keypad on-key-pressed='vm.onKeyPressedDest'>
+              <ng-key ng-repeat='key in vm.keys' ng-key-data='key'>{{key}}</ng-key>
+              <ng-key class='empty'></ng-key>
+              <ng-key ng-key-data='0'>0</ng-key>
+              <ng-key class='empty' ng-key-data='"<"'>del</ng-key>
+          </ng-keypad>
+      </div>
+      <div ng-if="move.destinationZip.length == 0">
+        <p style="text-align:center">
+          Not sure? Estimate the time it.<br>
+          In minutes:
+        </p>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="5">
+              5
+            </label>
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="10">
+              10
+            </label>
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="15">
+              15
+            </label>
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="20">
+              20
+            </label>
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="30">
+              30
+            </label>
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="45">
+              45
+            </label>
+            <label class="btn btn-primary" ng-model="move.destinationAddressDistance" btn-radio="60">
+              60
+            </label>
+        </div>
       </div>
     </div>
     <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationZip">
@@ -40,4 +49,3 @@
       </a>
     </p>
   </div>
-</section>
