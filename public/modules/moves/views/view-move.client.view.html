@@ -1,21 +1,21 @@
 <section data-ng-controller="MovesController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="move.name"></h1>
+		<h1 data-ng-bind="move.email"></h1>
+		<p>
+			Welcome back to sheduling your move for {{move.selDate | amDateFormat:'MM/DD/YYYY'}} at {{move.selDate | amDateFormat:'hh:mm A'}} you would like to reserve a {{move.moveType}} <br>
+			move from {{move.primaryAccess}} location to {{move.deliveryAccess}}
+			starting around time selected.
+		</p>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == move.user._id">
-		<a class="btn btn-primary" href="/#!/moves/{{move._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
+	<div class="pull-right">
+		<a class="btn btn-primary" ui-sref="setupMove.first">
+			Back to scheduling my move
 		</a>
 	</div>
 	<small>
 		<em class="text-muted">
-			Posted on
+			Submitted on
 			<span data-ng-bind="move.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="move.user.displayName"></span>
 		</em>
 	</small>
 </section>

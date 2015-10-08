@@ -6,6 +6,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 
 		// controller vars
+		$scope.host = $location.host() + ':' + $location.port();
 		$scope.hourRate = 129;
 		// init new move object
 		$scope.move = {
@@ -111,6 +112,11 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			move.$save(function(response) {
 				//$location.path('moves/' + response._id);
 
+				// load newly saved move
+				$scope.move = Moves.get({
+					moveId: response._id
+				});
+
 				// send user to saved slide
 				$state.go('setupMove.progressSaved');
 
@@ -158,6 +164,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			$scope.move = Moves.get({
 				moveId: $stateParams.moveId
 			});
+
+			//$state.go('setupMove.first');
 		};
 
 		// custom functions based on client requests

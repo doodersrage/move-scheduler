@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationZip">
+    <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationZip.length == 5">
       <a class="btn btn-primary btn-lg" ui-sref="setupMove.toBeMoved">
         Next Step
       </a>
