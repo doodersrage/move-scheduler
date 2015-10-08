@@ -9,6 +9,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.hourRate = 129;
 		// init new move object
 		$scope.move = {
+			email: '',
 			selDate: new Date(),
 			moveType: '',
 			startZip: '',
@@ -41,8 +42,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			tobemoved: '',
 			primaryAccess: '',
 			primaryAccessDif: 0,
-			roomsMoving: 0,
-			email: ''
+			roomsMoving: 0
 		};
 		// move times
 		$scope.times = {
@@ -82,15 +82,40 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.create = function() {
 			// Create new Move object
 			var move = new Moves ({
-				name: this.name
+					email: $scope.move.email,
+					selDate: $scope.move.selDate,
+					moveType: $scope.move.moveType,
+					startZip: $scope.move.startZip,
+					destinationZip: $scope.move.destinationZip,
+					destinationAddressDistance: $scope.move.destinationAddressDistance,
+					stopAlongWay: $scope.move.stopAlongWay,
+					appliances: $scope.move.appliances,
+					attic: $scope.move.attic,
+					basement: $scope.move.basement,
+					bigStuff: $scope.move.bigStuff,
+					deliveryAccess: $scope.move.deliveryAccess,
+					deliveryAccessDif: $scope.move.deliveryAccessDif,
+					deliveryAddressDistance: $scope.move.deliveryAddressDistance,
+					disassembly: $scope.move.disassembly,
+					garage: $scope.move.garage,
+					movingToType: $scope.move.movingToType,
+					patioFurniture: $scope.move.patioFurniture,
+					shed: $scope.move.shed,
+					tobemoved: $scope.move.tobemoved,
+					primaryAccess: $scope.move.primaryAccess,
+					primaryAccessDif: $scope.move.primaryAccessDif,
+					roomsMoving: $scope.move.roomsMoving
 			});
 
 			// Redirect after save
 			move.$save(function(response) {
-				$location.path('moves/' + response._id);
+				//$location.path('moves/' + response._id);
 
-				// Clear form fields
-				$scope.name = '';
+				// send user to saved slide
+				$state.go('setupMove.progressSaved');
+
+				// // Clear form fields
+				// $scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
