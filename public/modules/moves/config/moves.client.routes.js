@@ -12,6 +12,7 @@ angular.module('moves').config(['$stateProvider',
 		// setup project methods
 		state('setupMove', {
 			abstract: true,
+			params: {id: null},
 			url: '/moves/setup',
 			controller: 'MovesController',
 			templateUrl: 'modules/moves/views/setup.client.view.html'

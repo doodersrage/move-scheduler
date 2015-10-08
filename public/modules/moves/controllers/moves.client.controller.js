@@ -168,6 +168,15 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			//$state.go('setupMove.first');
 		};
 
+		// reload existing move
+		$scope.loadMove = function(){
+			if($stateParams.id){
+				$scope.move = Moves.get({
+					moveId: $stateParams.id
+				});
+			}
+		};
+
 		// custom functions based on client requests
 		$scope.nextStep = function(step){
 
