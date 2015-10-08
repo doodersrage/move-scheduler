@@ -5,23 +5,8 @@
         require extra assembly/disassembly?
       </p>
       <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary" ng-model="move.disassembly['Ikea bed']" btn-checkbox>
-            Ikea bed
-          </label>
-          <label class="btn btn-primary" ng-model="move.disassembly['bunk beds']" btn-checkbox>
-            bunk beds
-          </label>
-          <label class="btn btn-primary" ng-model="move.disassembly['cribs']" btn-checkbox>
-            cribs
-          </label>
-          <label class="btn btn-primary" ng-model="move.disassembly['washer/dryer hookup']" btn-checkbox>
-            washer/dryer hookup
-          </label>
-          <label class="btn btn-primary" ng-model="move.disassembly['other']" btn-checkbox>
-            other
-          </label>
-          <label class="btn btn-primary" ui-sref="setupMove.estimate" btn-checkbox>
-            none
+          <label ng-repeat="(key, item) in move.disassembly" class="btn btn-primary" ng-model="move.disassembly[key]" btn-checkbox>
+            {{key}}
           </label>
       </div>
     </div>

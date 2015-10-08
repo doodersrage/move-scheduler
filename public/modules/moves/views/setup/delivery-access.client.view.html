@@ -4,28 +4,28 @@
         At the delivery address, how will we primarily access the entrance?
       </p>
       <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'A short sidewalk'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = -1" btn-radio="'A short sidewalk'">
             A short sidewalk
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'A long sidewalk'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = 1" btn-radio="'A long sidewalk'">
             A long sidewalk
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'ground floor access'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = -1" btn-radio="'ground floor access'">
             ground floor access
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'One flight of stairs'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = 0" btn-radio="'One flight of stairs'">
             One flight of stairs
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'Two flights of stairs'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = 1" btn-radio="'Two flights of stairs'">
             Two flights of stairs
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'Onsite POD or rental truck'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = 0" btn-radio="'Onsite POD or rental truck'">
             Onsite POD or rental truck
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'An elevator'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = 1" btn-radio="'An elevator'">
             An elevator
           </label>
-          <label class="btn btn-primary" ng-model="move.deliveryAccess" btn-radio="'N/A move is taking place onsite or in house'">
+          <label class="btn btn-primary" ng-model="move.deliveryAccess" ng-click="move.deliveryAccessDif = 0" btn-radio="'N/A move is taking place onsite or in house'">
             N/A move is taking place onsite or in house
           </label>
       </div>

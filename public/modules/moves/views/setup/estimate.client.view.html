@@ -1,7 +1,7 @@
-  <div class="row">
+  <div class="row" data-ng-init="calcMoveTime()">
     <div class="jumbotron text-center">
       <p style="text-align:center">
-        I would expect this move to take about X hours.  based on<br>
+        I would expect this move to take about <b>{{times.hours}}</b> hours.  based on<br>
         this estimate we are available on the following day(s)
       </p>
       <p style="text-align:center">

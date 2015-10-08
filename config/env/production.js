@@ -10,10 +10,12 @@ module.exports = {
 				'public/lib/ngKeypad/dist/ng-keypad.min.css'
 		],
 			js: [
+				'public/lib/moment/moment.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js',
+				'public/lib/angular-moment/angular-moment.js',
 				'public/lib/ngKeypad/dist/ng-keypad.min.js',
-				'public/lib/angular-cookies/angular-cookies.js', 
+				'public/lib/angular-cookies/angular-cookies.js',
 				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angular-touch/angular-touch.js',
 				'public/lib/angular-sanitize/angular-sanitize.js',

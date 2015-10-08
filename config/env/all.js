@@ -22,6 +22,7 @@ module.exports = {
 				'public/lib/moment/moment.js',
 				'public/lib/angular/angular.js',
 				'public/lib/angular-resource/angular-resource.js',
+				'public/lib/angular-moment/angular-moment.js',
 				'public/lib/ngKeypad/dist/ng-keypad.min.js',
 				'public/lib/angular-cookies/angular-cookies.js',
 				'public/lib/angular-moment/angular-moment.min.js',

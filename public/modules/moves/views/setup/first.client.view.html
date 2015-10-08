@@ -31,12 +31,12 @@
     </p>
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-        <input type="text" class="form-control" data-ng-model="move.date" readonly>
+        <input type="text" class="form-control" data-ng-model="move.selDate" readonly>
     </div>
     <div class="input-group">
-      <datetimepicker data-ng-model="move.date" data-datetimepicker-config="{ minuteStep: 30 }"/>
+      <datetimepicker data-ng-model="move.selDate" data-datetimepicker-config="{ minuteStep: 30 }"/>
     </div>
-    <p style="text-align:right" ng-show="move.moveType && move.date">
+    <p style="text-align:right" ng-show="move.moveType && move.selDate">
       <a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
         Next Step
       </a>

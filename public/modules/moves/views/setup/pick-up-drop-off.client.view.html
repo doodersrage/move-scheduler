@@ -6,10 +6,10 @@
       </p>
     </div>
     <p style="text-align:right" >
-      <a class="btn btn-primary btn-lg" ui-sref="setupMove.dependingLocation">
+      <a class="btn btn-primary btn-lg" ng-click="move.stopAlongWay = 1" ui-sref="setupMove.dependingLocation">
         Yes
       </a>
-      <a class="btn btn-primary btn-lg" ui-sref="setupMove.primaryAccess">
+      <a class="btn btn-primary btn-lg" ng-click="move.stopAlongWay = 0" ui-sref="setupMove.primaryAccess">
         No
       </a>
     </p>

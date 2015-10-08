@@ -6,28 +6,53 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 
 		// controller vars
+		$scope.hourRate = 129;
 		// init new move object
 		$scope.move = {
+			selDate: new Date(),
 			moveType: '',
 			startZip: '',
 			destinationZip: '',
 			destinationAddressDistance: '',
-			appliances: [],
+			stopAlongWay: 0,
+			appliances: {
+				"Washer/Dryer":false,
+				"Refrigerator":false,
+				"Garage fridge or freezer":false,
+				"other":false
+			},
 			attic: '',
 			basement: '',
 			bigStuff: '',
 			deliveryAccess: '',
+			deliveryAccessDif: 0,
 			deliveryAddressDistance: '',
-			disassembly: [],
+			disassembly: {
+				"Ikea bed":false,
+				"bunk beds":false,
+				"cribs":false,
+				"washer/dryer hookup":false,
+				"other":false
+			},
 			garage: '',
 			movingToType: '',
 			patioFurniture: '',
 			shed: '',
 			tobemoved: '',
 			primaryAccess: '',
-			roomsMoving: '',
+			primaryAccessDif: 0,
+			roomsMoving: 0,
 			email: ''
 		};
+		// move times
+		$scope.times = {
+			mins: 0,
+			hours: 0
+		};
+
+		var money_round = function(num) {
+		    return Math.ceil(num * 100) / 100;
+		}
 
 		// keypad settings
 		$scope.vm = this;
@@ -127,8 +152,190 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		};
 
+		// delay redirect to specified state
 		$scope.delayRedirect = function(seconds,state){
 			setTimeout($state.go(state), (Number(seconds) * 10000));
+		};
+
+		// print disassembly list
+		$scope.printDisList = function(){
+			var selDis = [];
+			var selDisFin = '';
+
+			angular.forEach($scope.move.disassembly, function(value, key) {
+				if(value === true){
+					selDis.push(key);
+				}
+			});
+
+			// get last selected item
+			if(selDis.length > 1){
+				selDisFin = selDis.pop();
+			}
+
+			if(selDis.length > 0){
+				if(selDisFin) {
+					return selDis.join(', ') + ' and ' + selDisFin;
+				} else {
+					return selDis.join();
+				}
+			} else {
+				return 'nothing';
+			}
+		};
+
+		$scope.calcCostEst = function(){
+			return money_round(($scope.hourRate * $scope.times.hours));
+		};
+
+		// calc move time
+		$scope.calcMoveTime = function(){
+
+			// reset counts
+			$scope.times.mins = 0;
+			$scope.times.hours = 0;
+			var roomsMins = 0;
+
+			// walk through move vals
+			angular.forEach($scope.move, function(value, key) {
+
+				// apply each calc per variable instance
+				// move type assign
+				if(key === 'moveType'){
+					switch(value){
+						case 'xsmall':
+							$scope.times.mins += 90;
+						break;
+						case 'small':
+							$scope.times.mins += 150;
+						break;
+						case 'medium':
+							$scope.times.mins += 210;
+						break;
+						case 'large':
+							$scope.times.mins += 300;
+							$scope.hourRate = 145;
+						break;
+					}
+				}
+				// calc for rooms
+				if(key === 'roomsMoving'){
+					roomsMins += (Number(value) * 60);
+					$scope.times.mins += roomsMins;
+				}
+				// calc appliance move
+				if(key === 'appliances'){
+					angular.forEach(value, function(appliance, appKey) {
+						switch(appKey){
+							case 'Refrigerator':
+							case 'Washer/Dryer':
+								if(appliance === true){
+									$scope.times.mins += 20;
+								}
+							break;
+							case 'Garage fridge or freezer':
+								if(appliance === true){
+									$scope.times.mins += 5;
+								}
+							break;
+							case 'other':
+								if(appliance === true){
+									$scope.times.mins += 10;
+								}
+							break;
+						}
+					});
+				}
+
+				// calc attic move
+				if(key === 'attic'){
+					switch(value){
+						case 'A few things':
+							$scope.times.mins += 20;
+						break;
+						case 'The usual boxes bins and such':
+							$scope.times.mins += 40;
+						break;
+						case 'A good amount of stuff':
+							$scope.times.mins += 60;
+						break;
+						case 'I\'m afraid to look':
+							$scope.times.mins += 90;
+						break;
+					}
+				}
+
+				// calc basement move
+				if(key === 'basement'){
+					switch(value){
+						case 'A few things':
+							$scope.times.mins += 20;
+						break;
+						case 'The usual boxes bins and such':
+							$scope.times.mins += 40;
+						break;
+						case 'A good amount of stuff':
+							$scope.times.mins += 60;
+						break;
+						case 'I\'m afraid to look':
+							$scope.times.mins += 90;
+						break;
+					}
+				}
+
+				// calc garage move
+				if(key === 'garage'){
+					switch(value){
+						case 'light garage stuff':
+							$scope.times.mins += 20;
+						break;
+						case 'garage stuff and some boxes':
+							$scope.times.mins += 40;
+						break;
+						case 'Garage stuff, boxes plus bikes and toys':
+							$scope.times.mins += 60;
+						break;
+						case 'Its full. No room for the car':
+							$scope.times.mins += 90;
+						break;
+					}
+				}
+
+				// calc shed move
+				if(key === 'shed'){
+					switch(value){
+						case 'light yard stuff':
+							$scope.times.mins += 20;
+						break;
+						case 'yard stuff and some storage':
+							$scope.times.mins += 40;
+						break;
+						case 'yard stuff, boxes plus bikes and toys':
+							$scope.times.mins += 60;
+						break;
+						case 'Its full. bikes lawnmowers, ladders and canoes':
+							$scope.times.mins += 90;
+						break;
+					}
+				}
+
+				// calc patio furniture move
+				if(key === 'patioFurniture'){
+					switch(value){
+						case 'Grill and patio furniture':
+							$scope.times.mins += 30;
+						break;
+						case 'Grill, patio furniture, bird bath, chiminea etc':
+							$scope.times.mins += 60;
+						break;
+					}
+				}
+
+				// calc hours on final loop
+				$scope.times.hours = money_round(($scope.times.mins / 60));
+
+			});
+
 		};
 
 	}
