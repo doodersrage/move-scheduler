@@ -16,10 +16,10 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			destinationAddressDistance: '',
 			stopAlongWay: 0,
 			appliances: {
-				"Washer/Dryer":false,
-				"Refrigerator":false,
-				"Garage fridge or freezer":false,
-				"other":false
+				'Washer/Dryer':false,
+				'Refrigerator':false,
+				'Garage fridge or freezer':false,
+				'other':false
 			},
 			attic: '',
 			basement: '',
@@ -28,11 +28,11 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			deliveryAccessDif: 0,
 			deliveryAddressDistance: '',
 			disassembly: {
-				"Ikea bed":false,
-				"bunk beds":false,
-				"cribs":false,
-				"washer/dryer hookup":false,
-				"other":false
+				'Ikea bed':false,
+				'bunk beds':false,
+				'cribs':false,
+				'washer/dryer hookup':false,
+				'other':false
 			},
 			garage: '',
 			movingToType: '',
@@ -52,13 +52,13 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		var money_round = function(num) {
 		    return Math.ceil(num * 100) / 100;
-		}
+		};
 
 		// keypad settings
 		$scope.vm = this;
 
 		$scope.onKeyPressed = function(data) {
-      if (data == '<') {
+      if (data === '<') {
           $scope.move.startZip = $scope.move.startZip.slice(0, $scope.move.startZip.length - 1);
       } else {
           $scope.move.startZip += data;
@@ -66,7 +66,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
     };
 
 		$scope.onKeyPressedDest = function(data) {
-      if (data == '<') {
+      if (data === '<') {
           $scope.move.destinationZip = $scope.move.destinationZip.slice(0, $scope.move.destinationZip.length - 1);
       } else {
           $scope.move.destinationZip += data;
