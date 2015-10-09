@@ -15,7 +15,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			moveType: '',
 			startZip: '',
 			destinationZip: '',
-			destinationAddressDistance: '',
+			destinationAddressDistance: 0,
 			stopAlongWay: 0,
 			appliances: {
 				'Washer/Dryer':false,
@@ -28,7 +28,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			bigStuff: '',
 			deliveryAccess: '',
 			deliveryAccessDif: 0,
-			deliveryAddressDistance: '',
+			deliveryAddressDistance: 0,
 			disassembly: {
 				'Ikea bed':false,
 				'bunk beds':false,
@@ -81,50 +81,40 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		// Create new Move
 		$scope.create = function() {
+
 			// Create new Move object
-			var move = new Moves ({
-					email: $scope.move.email,
-					selDate: $scope.move.selDate,
-					moveType: $scope.move.moveType,
-					startZip: $scope.move.startZip,
-					destinationZip: $scope.move.destinationZip,
-					destinationAddressDistance: $scope.move.destinationAddressDistance,
-					stopAlongWay: $scope.move.stopAlongWay,
-					appliances: $scope.move.appliances,
-					attic: $scope.move.attic,
-					basement: $scope.move.basement,
-					bigStuff: $scope.move.bigStuff,
-					deliveryAccess: $scope.move.deliveryAccess,
-					deliveryAccessDif: $scope.move.deliveryAccessDif,
-					deliveryAddressDistance: $scope.move.deliveryAddressDistance,
-					disassembly: $scope.move.disassembly,
-					garage: $scope.move.garage,
-					movingToType: $scope.move.movingToType,
-					patioFurniture: $scope.move.patioFurniture,
-					shed: $scope.move.shed,
-					tobemoved: $scope.move.tobemoved,
-					primaryAccess: $scope.move.primaryAccess,
-					primaryAccessDif: $scope.move.primaryAccessDif,
-					roomsMoving: $scope.move.roomsMoving
-			});
+			if(typeof $scope.move._id === 'undefined'){
 
-			// Redirect after save
-			move.$save(function(response) {
-				//$location.path('moves/' + response._id);
+				var move = new Moves($scope.move);
 
-				// load newly saved move
-				$scope.move = Moves.get({
-					moveId: response._id
+				// Redirect after save
+				move.$save(function(response) {
+					//$location.path('moves/' + response._id);
+
+					// load newly saved move
+					$scope.move = Moves.get({
+						moveId: response._id
+					});
+
+					// send user to saved slide
+					$state.go('setupMove.progressSaved');
+
+					// // Clear form fields
+					// $scope.name = '';
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
 				});
 
-				// send user to saved slide
-				$state.go('setupMove.progressSaved');
+			// update existing move
+			} else {
+				var move = $scope.move ;
 
-				// // Clear form fields
-				// $scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+				move.$update(function() {
+					$location.path('moves/' + move._id);
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+			}
 		};
 
 		// Remove existing Move
