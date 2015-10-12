@@ -30,7 +30,17 @@ var MoveSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	startInfo: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	destinationZip: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	destinationInfo: {
 		type: String,
 		default: '',
 		trim: true

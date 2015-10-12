@@ -14,6 +14,13 @@ module.exports = function(app) {
 		.put(moves.update)
 		.delete(users.requiresLogin, moves.hasAuthorization, moves.delete);
 
+// gather Google Maps location info
+	app.route('/moves/getStartInfo')
+			.post(moves.getStartInfo);
+	app.route('/moves/getDestinationInfo')
+			.post(moves.getDestinationInfo);
+
+
 	// Finish by binding the Move middleware
 	app.param('moveId', moves.moveByID);
 };

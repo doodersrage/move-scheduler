@@ -1,8 +1,8 @@
 'use strict';
 
 // Moves controller
-angular.module('moves').controller('MovesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Moves', '$state',
-	function($scope, $stateParams, $location, Authentication, Moves, $state ) {
+angular.module('moves').controller('MovesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Moves', '$state', '$http',
+	function($scope, $stateParams, $location, Authentication, Moves, $state, $http ) {
 		$scope.authentication = Authentication;
 
 		// controller vars
@@ -14,8 +14,10 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			selDate: new Date(),
 			moveType: '',
 			startZip: '',
+			startInfo: {},
 			destinationZip: '',
 			destinationAddressDistance: 0,
+			destinationInfo: {},
 			stopAlongWay: 0,
 			appliances: {
 				'Washer/Dryer':false,
@@ -82,10 +84,12 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		// Create new Move
 		$scope.create = function() {
 
+			var move;
+
 			// Create new Move object
 			if(typeof $scope.move._id === 'undefined'){
 
-				var move = new Moves($scope.move);
+				move = new Moves($scope.move);
 
 				// Redirect after save
 				move.$save(function(response) {
@@ -107,7 +111,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 			// update existing move
 			} else {
-				var move = $scope.move ;
+				move = $scope.move ;
 
 				move.$update(function() {
 					$location.path('moves/' + move._id);
@@ -366,6 +370,31 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				// calc hours on final loop
 				$scope.times.hours = money_round(($scope.times.mins / 60));
 
+			});
+
+		};
+
+		// calc moving info
+		// get staring info
+		$scope.getStartInfo = function(){
+
+			$http.post('/moves/getStartInfo', {
+		        destZip: $scope.move.startZip
+	    }).
+			success(function(data, status, headers, config) {
+				$scope.move.startInfo = data;
+			});
+
+		};
+		// get destination info
+		$scope.getDestinationInfo = function(){
+
+			$http.post('/moves/getDestinationInfo', {
+				startZip: $scope.move.startZip,
+        destZip: $scope.move.destinationZip
+	    }).
+			success(function(data, status, headers, config) {
+				$scope.move.destinationInfo = data;
 			});
 
 		};

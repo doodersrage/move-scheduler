@@ -13,6 +13,14 @@
               <ng-key class='empty' ng-key-data='"<"'>del</ng-key>
           </ng-keypad>
       </div>
+      <div>
+        <a class="btn btn-primary btn-lg" ng-click="getDestinationInfo()" ng-if="move.destinationZip.length == 5">
+          Get Location Info
+        </a>
+      </div>
+      <div ng-if="move.destinationInfo.duration">
+        Estimated travel time: {{move.destinationInfo.duration}}
+      </div>
       <div ng-if="move.destinationZip.length == 0">
         <p style="text-align:center">
           Not sure? Estimate the time it.<br>
@@ -43,7 +51,7 @@
         </div>
       </div>
     </div>
-    <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationZip.length == 5">
+    <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationInfo.duration">
       <a class="btn btn-primary btn-lg" ui-sref="setupMove.toBeMoved">
         Next Step
       </a>

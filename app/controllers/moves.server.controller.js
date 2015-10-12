@@ -6,7 +6,11 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Move = mongoose.model('Move'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	distance = require('google-distance');
+
+// assign Google API key
+distance.apiKey = 'AIzaSyCRQvz2CrFoDjcYul3vm8ZiAYqRzUCCVtc';
 
 /**
  * Create a Move
@@ -102,4 +106,36 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
+};
+
+// custom moving app methods
+// get starting location info
+exports.getStartInfo = function(req, res, next){
+
+	distance.get(
+  {
+    origin: '23220',
+    destination: req.body.destZip
+  },
+  function(err, data) {
+    if (err) return console.log(err);
+		// return found data
+		res.jsonp(data);
+	});
+
+};
+// get destination location info
+exports.getDestinationInfo = function(req, res, next){
+
+	distance.get(
+  {
+    origin: req.body.startZip,
+    destination: req.body.destZip
+  },
+  function(err, data) {
+    if (err) return console.log(err);
+		// return found data
+		res.jsonp(data);
+	});
+
 };
