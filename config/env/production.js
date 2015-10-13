@@ -16,8 +16,6 @@ module.exports = {
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-moment/angular-moment.js',
-				'public/lib/angular-timer/dist/assets/js/angular-timer-bower.min.js',
-				'public/lib/angular-timer/dist/assets/js/angular-timer-all.min.js',
 				'public/lib/angular-timer/dist/angular-timer.min.js',
 				'public/lib/ngKeypad/dist/ng-keypad.min.js',
 				'public/lib/angular-cookies/angular-cookies.js',
