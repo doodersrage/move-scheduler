@@ -12,10 +12,12 @@
     "angular-moment": "~0.10.3",
     "angular-resource": "~1.2",
     "angular-sanitize": "~1.2",
+    "angular-timer": "~1.3.3",
     "angular-touch": "~1.2",
     "angular-ui-router": "~0.2.10",
     "angular-ui-utils": "~0.1.1",
     "bootstrap": "~3",
+    "humanize-duration": "~3.3.0",
     "moment": "~2.10.6",
     "ngKeypad": "*"
   }

@@ -1,4 +1,4 @@
-<section data-ng-init="delayRedirect(3,'setupMove.primaryAccess')">
+<section>
   <div class="row">
     <div class="jumbotron text-center">
       <p style="text-align:center">
@@ -8,5 +8,6 @@
         charge other than the additional time.
       </p>
     </div>
+    <timer countdown="3" interval="1000" finish-callback="delayRedirect(0,'setupMove.primaryAccess')">{{seconds}} second{{secondsS}}</timer>
   </div>
 </section>

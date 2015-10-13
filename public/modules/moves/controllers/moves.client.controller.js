@@ -260,9 +260,9 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.getDestText = function(){
 
 			if($scope.move.destinationZip){
-				destText = $scope.move.destinationInfo.destination;
+				return $scope.move.destinationInfo.destination;
 			} else {
-				destText = $scope.move.destinationAddressDistance + ' minutes away';
+				return $scope.move.destinationAddressDistance + ' minutes away';
 			}
 
 		};

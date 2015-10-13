@@ -10,10 +10,15 @@ module.exports = {
 				'public/lib/ngKeypad/dist/ng-keypad.min.css'
 		],
 			js: [
-				'public/lib/moment/moment.js',
+				'public/lib/moment/min/moment.min.js',
+				'public/lib/moment/min/locals.js',
+				'public/lib/humanize-duration/humanize-duration.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-moment/angular-moment.js',
+				'public/lib/angular-timer/dist/assets/js/angular-timer-bower.min.js',
+				'public/lib/angular-timer/dist/assets/js/angular-timer-all.min.js',
+				'public/lib/angular-timer/dist/angular-timer.min.js',
 				'public/lib/ngKeypad/dist/ng-keypad.min.js',
 				'public/lib/angular-cookies/angular-cookies.js',
 				'public/lib/angular-animate/angular-animate.js',
