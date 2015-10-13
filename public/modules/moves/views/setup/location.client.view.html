@@ -5,6 +5,7 @@
          at the starting address.
   		</p>
       <a class="btn btn-primary btn-lg" id="use-my-location" ng-click="useMyLocation()">Use my location</a>
+      <div ng-show="lookingup" style="text-align:center;font-weight:700;color:red">{{message}}</div>
       <input type="text" maxlength="5" data-ng-model="move.startZip" id="move.startZip" class="form-control" placeholder="zip" autocomplete="off" required>
       <div class='container ios'>
           <ng-keypad on-key-pressed='vm.onKeyPressed'>

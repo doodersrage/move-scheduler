@@ -84,6 +84,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.useMyLocation = function(){
 
 			if (navigator.geolocation) {
+				$scope.message = 'Looking up your location. Please be patient.';
+				$scope.lookingup = 1;
 				navigator.geolocation.getCurrentPosition(function(position){
 		      $scope.$apply(function(){
 		        $scope.geoPosition = position;
@@ -94,6 +96,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 									lon: $scope.geoPosition.coords.longitude
 				    }).
 						success(function(data, status, headers, config) {
+							$scope.lookingup = 0;
 							$scope.move.startZip = data[0].zipcode;
 						});
 
@@ -101,7 +104,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		    });
       }
       else {
-        $scope.error = 'Geolocation is not supported by this browser.';
+				$scope.lookingup = 1;
+        $scope.message = 'Geolocation is not supported by this browser.';
       }
 
 		};
@@ -260,7 +264,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			} else {
 				destText = $scope.move.destinationAddressDistance + ' minutes away';
 			}
-			
+
 		};
 
 		// calc move time
