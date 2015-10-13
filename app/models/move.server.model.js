@@ -55,7 +55,9 @@ var MoveSchema = new Schema({
 		default: 0
 	},
 	appliances: {
-		type: Array
+		type: String,
+		default: '',
+		trim: true
 	},
 	attic:{
 		type: String,
@@ -87,7 +89,9 @@ var MoveSchema = new Schema({
 		trim: true
 	},
 	disassembly: {
-		type: Array
+		type: String,
+		default: '',
+		trim: true
 	},
 	garage: {
 		type: String,
