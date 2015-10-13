@@ -20,6 +20,7 @@ var mongoose = require('mongoose'),
 	distance = require('google-distance'),
 	config = require('../../config/config'),
 	nodemailer = require('nodemailer'),
+  sgTransport = require('nodemailer-sendgrid-transport'),
 	async = require('async'),
 	moment = require('moment'),
 	geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
@@ -62,7 +63,7 @@ var sendMoveEmail = function(req, res, move){
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var smtpTransport = nodemailer.createTransport(sgTransport(config.mailer.options));
 			var mailOptions = {
 				to:[move.email, config.mailer.from],
 				from: config.mailer.from,

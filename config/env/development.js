@@ -31,13 +31,11 @@ module.exports = {
 		callbackURL: 'http://localhost:3000/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: process.env.MAILER_FROM || 'no-reply@studiocenterauditions.com',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
-			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
-			}
+		    auth: {
+		        api_key: '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'
+		    }
 		}
 	}
 };
