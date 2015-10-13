@@ -4,10 +4,10 @@
         Is there anything that will<br>
         require extra assembly/disassembly?
       </p>
-      <div class="btn-group" data-toggle="buttons">
-          <label ng-repeat="(key, item) in move.disassembly" class="btn btn-primary" ng-model="move.disassembly[key]" btn-checkbox>
+      <div data-toggle="buttons">
+          <p ng-repeat="(key, item) in move.disassembly"><label class="btn btn-primary" ng-model="move.disassembly[key]" btn-checkbox>
             {{key}}
-          </label>
+          </label></p>
       </div>
     </div>
     <p style="text-align:right" ng-show="move.disassembly">

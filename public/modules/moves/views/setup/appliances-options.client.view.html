@@ -3,10 +3,10 @@
   		<p>
         Click any that apply.
   		</p>
-      <div class="btn-group" data-toggle="buttons">
-          <label ng-repeat="(key, item) in move.appliances" class="btn btn-primary" ng-model="move.appliances[key]" btn-checkbox>
+      <div data-toggle="buttons">
+          <p ng-repeat="(key, item) in move.appliances"><label class="btn btn-primary" ng-model="move.appliances[key]" btn-checkbox>
             {{key}}
-          </label>
+          </label></p>
       </div>
     </div>
     <p style="text-align:right" ng-show="move.appliances">
