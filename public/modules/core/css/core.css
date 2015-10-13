@@ -14,6 +14,14 @@
     border-color:#78FA89;
 }
 /* bootstrap hacks */
+body,h1,h2,h3,h4,h5,h6{
+	font-family:'georgia'
+}
 .btn-primary:active, .btn-primary.active{
 	background:#000;
+}
+.jumbotron{
+	background-color: #fff;
+	border: 1px solid #000;
+	border-radius: 0 !important;
 }
