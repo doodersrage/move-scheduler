@@ -20,6 +20,10 @@ module.exports = function(app) {
 	app.route('/moves/getDestinationInfo')
 			.post(moves.getDestinationInfo);
 
+// geo lookup
+app.route('/moves/geoLookup')
+		.post(moves.geoLookup);
+
 
 	// Finish by binding the Move middleware
 	app.param('moveId', moves.moveByID);

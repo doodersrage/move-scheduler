@@ -1,0 +1,10 @@
+<p>New move request received!</p>
+
+<p>
+  On {{selectedDate}} at {{selectedTime}} you would like to reserve a {{move.moveType}} <br>
+  move from {{move.primaryAccess}} {{move.startInfo.destination}} to {{move.deliveryAccess}} {{destText}}, <br>
+  starting around time selected.<br>
+  We have noted a few obstacles worth mentioning that<br>
+  may add a little time. Your move is estimated to take <br>
+  about <b>{{times.hours}}</b> hours at the hourly rate of <b>${{move.costsData.hourRate}}</b> and cost <b>${{estCost}}</b>.
+</p>

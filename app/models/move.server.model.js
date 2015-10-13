@@ -127,6 +127,11 @@ var MoveSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	costsData: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	created: {
 		type: Date,
 		default: Date.now

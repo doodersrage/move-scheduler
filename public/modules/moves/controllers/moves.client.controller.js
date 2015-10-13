@@ -81,10 +81,39 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.vm.onKeyPressed = $scope.onKeyPressed;
 		$scope.vm.onKeyPressedDest = $scope.onKeyPressedDest;
 
+		$scope.useMyLocation = function(){
+
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position){
+		      $scope.$apply(function(){
+		        $scope.geoPosition = position;
+
+						// lookup geo data
+						$http.post('/moves/geoLookup', {
+					        lat: $scope.geoPosition.coords.latitude,
+									lon: $scope.geoPosition.coords.longitude
+				    }).
+						success(function(data, status, headers, config) {
+							$scope.move.startZip = data[0].zipcode;
+						});
+
+		      });
+		    });
+      }
+      else {
+        $scope.error = 'Geolocation is not supported by this browser.';
+      }
+
+		};
+
 		// Create new Move
 		$scope.create = function() {
 
 			var move;
+
+			// append move time and costs calc to move object
+			$scope.move.costsData.hourRate = $scope.hourRate;
+			$scope.move.costsData.times = $scope.times;
 
 			// Create new Move object
 			if(typeof $scope.move._id === 'undefined'){
@@ -222,6 +251,16 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		$scope.calcCostEst = function(){
 			return money_round(($scope.hourRate * $scope.times.hours));
+		};
+
+		$scope.getDestText = function(){
+
+			if($scope.move.destinationZip){
+				destText = $scope.move.destinationInfo.destination;
+			} else {
+				destText = $scope.move.destinationAddressDistance + ' minutes away';
+			}
+			
 		};
 
 		// calc move time

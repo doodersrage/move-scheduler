@@ -3,7 +3,7 @@
 		<h1 data-ng-bind="move.email"></h1>
 		<p>
 			Welcome back to sheduling your move for {{move.selDate | amDateFormat:'MM/DD/YYYY'}} at {{move.selDate | amDateFormat:'hh:mm A'}} you would like to reserve a {{move.moveType}} <br>
-			move from {{move.primaryAccess}} {{move.startInfo.destination}} to {{move.deliveryAccess}} {{move.destinationInfo.destination}}
+			move from {{move.primaryAccess}} {{move.startInfo.destination}} to {{move.deliveryAccess}} {{getDestText()}}
 			starting around time selected.
 		</p>
 	</div>

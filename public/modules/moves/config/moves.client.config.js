@@ -6,6 +6,5 @@ angular.module('moves').run(['Menus',
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'Moves', 'moves', 'dropdown', '/moves(/create)?');
 		Menus.addSubMenuItem('topbar', 'moves', 'List Moves', 'moves');
-		Menus.addSubMenuItem('topbar', 'moves', 'New Move', 'moves/create');
 	}
 ]);
