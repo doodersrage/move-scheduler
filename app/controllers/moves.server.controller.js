@@ -171,14 +171,15 @@ function authorize(req, res, credentials, callback) {
 function listEvents(req, res, auth) {
   var msg;
   // set upper bounds of search query
-  var endDate = new Date();
+  var startDate = new Date(req.body.selDate);
+  var endDate = startDate;
   endDate.setHours(endDate.getHours()+2);
   // query google calendar
   var calendar = google.calendar('v3');
   calendar.events.list({
     auth: auth,
     calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
+    timeMin: startDate.toISOString(),
     timeMax: endDate.toISOString(),
     maxResults: 10,
     singleEvents: true,

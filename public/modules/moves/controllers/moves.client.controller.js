@@ -126,8 +126,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 								selDate: $scope.move.selDate
 					}).
 					success(function(data, status, headers, config) {
-
-						if(data = 'No upcoming events found.'){
+						if(typeof data === 'string'){
 							$scope.dateAvail = true;
 						} else {
 							if(data.length >= 3){
@@ -136,7 +135,6 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 								$scope.dateAvail = true;
 							}
 						}
-
 					});
 
 				} else {
