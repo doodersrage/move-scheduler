@@ -8,10 +8,12 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		// controller vars
 		$scope.host = $location.host() + ':' + $location.port();
 		$scope.hourRate = 129;
+		$scope.dateAvail = true;
+		$scope.dateInvalid = false;
 		// init new move object
 		$scope.move = {
 			email: '',
-			selDate: new Date(),
+			selDate: '',
 			moveType: '',
 			startZip: '',
 			startInfo: {},
@@ -107,6 +109,41 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				$scope.lookingup = 1;
         $scope.message = 'Geolocation is not supported by this browser.';
       }
+
+		};
+
+		// check selected date and time for available options
+		$scope.checkDate = function(){
+
+			if($scope.move.selDate){
+
+				if($scope.move.selDate > new Date()){
+
+					$scope.dateInvalid = false;
+
+					// lookup geo data
+					$http.post('/moves/checkCalendar', {
+								selDate: $scope.move.selDate
+					}).
+					success(function(data, status, headers, config) {
+
+						if(data = 'No upcoming events found.'){
+							$scope.dateAvail = true;
+						} else {
+							if(data.length >= 3){
+								$scope.dateAvail = false;
+							} else {
+								$scope.dateAvail = true;
+							}
+						}
+
+					});
+
+				} else {
+					$scope.dateInvalid = true;
+				}
+
+			}
 
 		};
 

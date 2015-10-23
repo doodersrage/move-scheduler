@@ -9,6 +9,9 @@ module.exports = function(app) {
 		.get(moves.list)
 		.post(moves.create);
 
+	app.route('/moves/checkCalendar')
+		.post(moves.checkCalendar);
+
 	app.route('/moves/:moveId')
 		.get(moves.read)
 		.put(moves.update)
@@ -23,6 +26,7 @@ module.exports = function(app) {
 // geo lookup
 app.route('/moves/geoLookup')
 		.post(moves.geoLookup);
+
 
 
 	// Finish by binding the Move middleware

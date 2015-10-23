@@ -29,14 +29,22 @@
     </label><br>
       On, before or after
     </p>
+		<div ng-show="dateInvalid">
+			<h4>You have chosen a previous date and time. Please choose a date and time in the future.</h4>
+		</div>{{Date.now}}
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
         <input type="text" class="form-control" data-ng-model="move.selDate" readonly>
     </div>
     <div class="input-group">
-      <datetimepicker data-ng-model="move.selDate" data-datetimepicker-config="{ minuteStep: 30 }"/>
+      <datetimepicker data-ng-model="move.selDate" ng-change="checkDate()" data-datetimepicker-config="{ minuteStep: 30 }"/>
     </div>
-    <p style="text-align:right" ng-show="move.moveType && move.selDate">
+		<div ng-show="dateAvail == false">
+			<h3>We are unavailable that day. <br>
+			Would you like to try another <br>
+			day(s)?</h3>
+		</div>{{Date.now}}
+    <p style="text-align:right" ng-show="move.moveType && move.selDate && dateInvalid == false && dateAvail == true">
       <a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
         Next Step
       </a>

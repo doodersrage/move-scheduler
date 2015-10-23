@@ -1,6 +1,25 @@
 'use strict';
+/**
+ * Module dependencies.
+ */
+var mongoose = require('mongoose'),
+  fs = require('fs'),
+  path = require('path'),
+  readline = require('readline'),
+  google = require('googleapis'),
+  googleAuth = require('google-auth-library'),
+	errorHandler = require('./errors'),
+	Move = mongoose.model('Move'),
+	_ = require('lodash'),
+	distance = require('google-distance'),
+	config = require('../../config/config'),
+	nodemailer = require('nodemailer'),
+  sgTransport = require('nodemailer-sendgrid-transport'),
+	async = require('async'),
+	moment = require('moment');
 
-var googAPI = 'AIzaSyCRQvz2CrFoDjcYul3vm8ZiAYqRzUCCVtc';
+// geo code config
+var googAPI = config.google.apiKey;
 
 var geocoderProvider = 'google';
 var httpAdapter = 'https';
@@ -10,20 +29,7 @@ var extra = {
     formatter: null         // 'gpx', 'string', ...
 };
 
-/**
- * Module dependencies.
- */
-var mongoose = require('mongoose'),
-	errorHandler = require('./errors'),
-	Move = mongoose.model('Move'),
-	_ = require('lodash'),
-	distance = require('google-distance'),
-	config = require('../../config/config'),
-	nodemailer = require('nodemailer'),
-  sgTransport = require('nodemailer-sendgrid-transport'),
-	async = require('async'),
-	moment = require('moment'),
-	geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
+var	geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
 
 // assign Google API key
 distance.apiKey = googAPI;
@@ -79,6 +85,142 @@ var sendMoveEmail = function(req, res, move){
 	});
 
 };
+
+// gather and compare google calendar data
+var TOKEN_PATH = config.google.TOKEN_DIR + 'calendar-nodejs-quickstart.json';
+
+/**
+ * Store token to disk be used in later program executions.
+ *
+ * @param {Object} token The token to store to disk.
+ */
+function storeToken(token) {
+  try {
+    fs.mkdirSync(config.google.TOKEN_DIR);
+  } catch (err) {
+    if (err.code !== 'EEXIST') {
+      throw err;
+    }
+  }
+  fs.writeFile(TOKEN_PATH, JSON.stringify(token));
+  console.log('Token stored to ' + TOKEN_PATH);
+}
+
+/**
+ * Get and store new token after prompting for user authorization, and then
+ * execute the given callback with the authorized OAuth2 client.
+ *
+ * @param {google.auth.OAuth2} oauth2Client The OAuth2 client to get token for.
+ * @param {getEventsCallback} callback The callback to call with the authorized
+ *     client.
+ */
+function getNewToken(oauth2Client, callback) {
+  var authUrl = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: config.google.SCOPES
+  });
+  console.log('Authorize this app by visiting this url: ', authUrl);
+  var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  rl.question('Enter the code from that page here: ', function(code) {
+    rl.close();
+    oauth2Client.getToken(code, function(err, token) {
+      if (err) {
+        console.log('Error while trying to retrieve access token', err);
+        return;
+      }
+      oauth2Client.credentials = token;
+      storeToken(token);
+      callback(oauth2Client);
+    });
+  });
+}
+
+/**
+ * Create an OAuth2 client with the given credentials, and then execute the
+ * given callback function.
+ *
+ * @param {Object} credentials The authorization client credentials.
+ * @param {function} callback The callback to call with the authorized client.
+ */
+function authorize(req, res, credentials, callback) {
+  var clientSecret = credentials.installed.client_secret;
+  var clientId = credentials.installed.client_id;
+  var redirectUrl = credentials.installed.redirect_uris[0];
+  var auth = new googleAuth();
+  var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+  // Check if we have previously stored a token.
+  fs.readFile(TOKEN_PATH, function(err, token) {
+    if (err) {
+      getNewToken(oauth2Client, callback);
+    } else {
+      oauth2Client.credentials = JSON.parse(token);
+      callback(req, res, oauth2Client);
+    }
+  });
+}
+
+/**
+ * Lists the next 10 events on the user's primary calendar.
+ *
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+function listEvents(req, res, auth) {
+  var msg;
+  // set upper bounds of search query
+  var endDate = new Date();
+  endDate.setHours(endDate.getHours()+2);
+  // query google calendar
+  var calendar = google.calendar('v3');
+  calendar.events.list({
+    auth: auth,
+    calendarId: 'primary',
+    timeMin: (new Date()).toISOString(),
+    timeMax: endDate.toISOString(),
+    maxResults: 10,
+    singleEvents: true,
+    orderBy: 'startTime'
+  }, function(err, response) {
+    if (err) {
+      msg = 'The API returned an error: ' + err;
+      return res.jsonp(msg);
+    }
+    var events = response.items;
+    if (events.length === 0) {
+      msg = 'No upcoming events found.';
+      return res.jsonp(msg);
+    } else {
+      var results = [];
+      for (var i = 0; i < events.length; i++) {
+        var event = events[i];
+        var start = event.start.dateTime || event.start.date;
+        results.push('%s - %s', start, event.summary);
+      }
+      return res.jsonp(results);
+    }
+  });
+}
+
+exports.checkCalendar = function(req, res){
+
+  var appDir = path.dirname(require.main.filename);
+
+  // Load client secrets from a local file.
+  fs.readFile(appDir + '/client_secret.json', function processClientSecrets(err, content) {
+    if (err) {
+      console.log('Error loading client secret file: ' + err);
+      return;
+    }
+    // Authorize a client with the loaded credentials, then call the
+    // Google Calendar API.
+    authorize(req, res, JSON.parse(content), listEvents);
+  });
+
+};
+
 
 exports.geoLookup = function(req, res){
 
