@@ -10,6 +10,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.hourRate = 129;
 		$scope.dateAvail = true;
 		$scope.dateInvalid = false;
+		$scope.checkingCal = false;
 		// init new move object
 		$scope.move = {
 			email: '',
@@ -119,6 +120,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 				if($scope.move.selDate > new Date()){
 
+					$scope.checkingCal = true;
+
 					$scope.dateInvalid = false;
 
 					// lookup geo data
@@ -126,6 +129,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 								selDate: $scope.move.selDate
 					}).
 					success(function(data, status, headers, config) {
+
 						if(typeof data === 'string'){
 							$scope.dateAvail = true;
 						} else {
@@ -135,6 +139,9 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 								$scope.dateAvail = true;
 							}
 						}
+
+						$scope.checkingCal = false;
+
 					});
 
 				} else {

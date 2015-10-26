@@ -39,6 +39,9 @@
     <div class="input-group">
       <datetimepicker data-ng-model="move.selDate" ng-change="checkDate()" data-datetimepicker-config="{ minuteStep: 30 }"/>
     </div>
+		<div ng-show="checkingCal">
+			<h3>Currently checking our calendar, please be patient.</h3>
+		</div>
 		<div ng-show="dateAvail == false">
 			<h3>We are unavailable that day. <br>
 			Would you like to try another <br>
