@@ -143,7 +143,7 @@ function listEvents(req, res, auth) {
   // set upper bounds of search query
   var startDate = new Date(req.body.selDate);
   var endDate = startDate;
-  endDate.setHours(endDate.getHours()+2);
+  endDate.setHours(endDate.getHours()+1);
   // query google calendar
   var calendar = google.calendar('v3');
   calendar.events.list({
