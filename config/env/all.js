@@ -15,7 +15,6 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
-				'public/lib/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
 				'public/lib/ngKeypad/dist/ng-keypad.min.css'
 		],
 			js: [
@@ -33,8 +32,7 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'public/lib/angular-bootstrap-datetimepicker/src/js/datetimepicker.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
 			]
 		},
 		css: [

@@ -119,6 +119,7 @@ function authorize(req, res, credentials, callback) {
   var redirectUrl = credentials.installed.redirect_uris[0];
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+  var msg;
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, function(err, token) {
@@ -140,10 +141,12 @@ function authorize(req, res, credentials, callback) {
  */
 function listEvents(req, res, auth) {
   var msg;
+  var results = {};
   // set upper bounds of search query
-  var startDate = new Date(req.body.selDate);
-  var endDate = startDate;
-  endDate.setHours(endDate.getHours()+1);
+  var startDate = moment(req.body.selDate);
+  // reset end date hours +8
+  var endDate = moment(req.body.selDate);
+  endDate.add(4, 'hours');
   // query google calendar
   var calendar = google.calendar('v3');
   calendar.events.list({
@@ -151,24 +154,52 @@ function listEvents(req, res, auth) {
     calendarId: 'primary',
     timeMin: startDate.toISOString(),
     timeMax: endDate.toISOString(),
-    maxResults: 10,
+    maxResults: 24,
     singleEvents: true,
     orderBy: 'startTime'
   }, function(err, response) {
     if (err) {
-      msg = 'The API returned an error: ' + err;
-      return res.jsonp(msg);
+      results.error = err;
+      results.status = 'Error';
+      return res.jsonp(results);
     }
     var events = response.items;
     if (events.length === 0) {
-      msg = 'No upcoming events found.';
-      return res.jsonp(msg);
+      results.status = 'No upcoming events found.';
+      return res.jsonp(results);
     } else {
-      var results = [];
+      var totEventsTime = 0;
+      var overSixHrs = 0;
+      var curDif, now, then, start, event, end, curTime;
+      // walk through found objects, gather overall event timings
       for (var i = 0; i < events.length; i++) {
-        var event = events[i];
-        var start = event.start.dateTime || event.start.date;
-        results.push('%s - %s', start, event.summary);
+        event = events[i];
+        start = event.start.dateTime || event.start.date;
+        end = event.end.dateTime || event.end.date;
+        // gather total time alloted
+        // store current event start and end times
+        now = moment(end);
+        then = moment(start);
+        // get time vals dif
+        curDif = moment.duration(now.diff(then));
+        // calc cur event time
+        curTime = (curDif.get('hours') * 60) + curDif.get('minutes');
+        if(curTime >= 360){
+          overSixHrs += 1;
+        }
+        // store total time calculated
+        totEventsTime += curTime;
+
+        if((events.length - 1) === i){
+          // assign result values
+          results.totTime = totEventsTime;
+          results.overSixHrs = overSixHrs;
+          if((totEventsTime / 60) > 8) {
+            results.status = 'unavailable';
+          } else {
+            results.status = 'open';
+          }
+        }
       }
       return res.jsonp(results);
     }
@@ -195,7 +226,11 @@ exports.checkCalendar = function(req, res){
 
 exports.geoLookup = function(req, res){
 
-	geocoder.reverse({lat: req.body.lat, lon: req.body.lon}, function(err, geoData) {
+	geocoder.reverse(
+    {
+      lat: req.body.lat,
+      lon: req.body.lon
+    }, function(err, geoData) {
     //console.log(res);
 		res.jsonp(geoData);
 	});
@@ -207,6 +242,7 @@ exports.geoLookup = function(req, res){
  */
 exports.create = function(req, res) {
 	var move = new Move(req.body);
+  var moveExt = req.body;
 	move.user = req.user;
 
 	move.save(function(err) {
@@ -217,7 +253,7 @@ exports.create = function(req, res) {
 		} else {
 
 			// send move email
-			sendMoveEmail(req, res, move);
+			sendMoveEmail(req, res, moveExt);
 
 			res.jsonp(move);
 		}

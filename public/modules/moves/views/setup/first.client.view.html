@@ -26,29 +26,41 @@
 			        1700-2600 Sq. Feet
 						</label>
 		    </div>
-    </label><br>
+    </label>
+	</p>
+	<p>
       On, before or after
     </p>
-		<div ng-show="dateInvalid">
-			<h4>You have chosen a previous date and time. Please choose a date and time in the future.</h4>
-		</div>{{Date.now}}
+		<div class="input-group">
+			<div style="display:inline-block; padding-bottom:10px">
+				<select class="form-control" ng-model="move.selTimeDay">
+					<option value="morning">Morning (9am-1pm)</option>
+					<option value="afternoon">Afternoon (1pm-9pm)</option>
+				</select>
+			</div>
+		</div>
+		<p>
+			On the date of
+		</p>
     <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-        <input type="text" class="form-control" data-ng-model="move.selDate" readonly>
-    </div>
-    <div class="input-group">
-      <datetimepicker data-ng-model="move.selDate" ng-change="checkDate()" data-datetimepicker-config="{ minuteStep: 30 }"/>
+			<div style="display:inline-block;">
+				<datepicker ng-model="move.selDate" show-weeks="false" class="well well-sm"></datepicker>
+	    </div>
     </div>
 		<div ng-show="checkingCal">
 			<h3>Currently checking our calendar, please be patient.</h3>
 		</div>
-		<div ng-show="dateAvail == false">
-			<h3>We are unavailable that day. <br>
-			Would you like to try another <br>
-			day(s)?</h3>
+		<div ng-if="move.selDate && move.selTimeDay">
+			<a class="btn btn-primary btn-lg" ng-click="checkDate()">
+        Check Availability
+      </a>
 		</div>
-    <p style="text-align:right" ng-show="move.moveType && move.selDate && dateInvalid == false && dateAvail == true">
-      <a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
+		<div ng-if="message">
+			{{message}}
+		</div>
+    <p style="text-align:right" ng-if="move.moveType && dateAvail === true">
+      Congratulations! Your selected date and time is available!
+			<a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
         Next Step
       </a>
     </p>

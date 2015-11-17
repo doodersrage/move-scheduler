@@ -1,3 +1,6 @@
+.jumbotron h1, .jumbotron .h1, h1{
+	color:#ff0000;
+}
 .content {
 	margin-top: 50px;
 }
@@ -24,4 +27,14 @@ body,h1,h2,h3,h4,h5,h6{
 	background-color: #fff;
 	border: 1px solid #000;
 	border-radius: 0 !important;
+}
+.btn-primary{
+	border-radius:0;
+	border:2px solid #000;
+	background:#fff;
+	color:#000;
+}
+.btn-primary:hover{
+	color:#fff;
+	background:#000;
 }

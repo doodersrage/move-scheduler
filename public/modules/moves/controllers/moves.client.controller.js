@@ -7,14 +7,16 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		// controller vars
 		$scope.host = $location.host() + ':' + $location.port();
+		$scope.message = '';
 		$scope.hourRate = 129;
-		$scope.dateAvail = true;
+		$scope.dateAvail = false;
 		$scope.dateInvalid = false;
 		$scope.checkingCal = false;
 		// init new move object
 		$scope.move = {
 			email: '',
-			selDate: '',
+			selTimeDay: 'morning',
+			selDate: new Date(),
 			moveType: '',
 			startZip: '',
 			startInfo: {},
@@ -48,10 +50,13 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			tobemoved: '',
 			primaryAccess: '',
 			primaryAccessDif: 0,
-			roomsMoving: 0
+			roomsMoving: 0,
+			costsData: {}
 		};
 		// move times
 		$scope.times = {
+			startTravelMins: 0,
+			destTravelMins: 0,
 			mins: 0,
 			hours: 0
 		};
@@ -59,6 +64,24 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		var money_round = function(num) {
 		    return Math.ceil(num * 100) / 100;
 		};
+
+		// ui bootstrap date values
+		$scope.minDate = new Date();
+		$scope.events = [];
+		$scope.getDayClass = function(date, mode) {
+	    if (mode === 'day') {
+	      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+	      for (var i=0;i<$scope.events.length;i++){
+	        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+	        if (dayToCheck === currentDay) {
+	          return $scope.events[i].status;
+	        }
+	      }
+	    }
+			return '';
+	  };
 
 		// keypad settings
 		$scope.vm = this;
@@ -101,6 +124,9 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 						success(function(data, status, headers, config) {
 							$scope.lookingup = 0;
 							$scope.move.startZip = data[0].zipcode;
+
+							$scope.getStartInfo();
+
 						});
 
 		      });
@@ -124,20 +150,35 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 					$scope.dateInvalid = false;
 
+					// convert selected date and time
+					var usrSelDateTime = new Date($scope.move.selDate);
+
+					// reset selected date hours based on selected date part
+					usrSelDateTime.setMinutes(0);
+					usrSelDateTime.setSeconds(0);
+					if($scope.move.selTimeDay === 'morning'){
+						usrSelDateTime.setHours(9);
+					} else {
+						usrSelDateTime.setHours(13);
+					}
+
 					// lookup geo data
 					$http.post('/moves/checkCalendar', {
-								selDate: $scope.move.selDate
+								selDate: usrSelDateTime
 					}).
 					success(function(data, status, headers, config) {
-
-						if(typeof data === 'string'){
+						if(data.status === 'Error'){
+							$scope.message = data.status + 'determining assigned moving data. Please try again shortly.';
+							$scope.dateAvail = false;
+						} else if(data.status === 'No upcoming events found.') {
+							$scope.message = '';
 							$scope.dateAvail = true;
-						} else {
-							if(data.length >= 3){
-								$scope.dateAvail = false;
-							} else {
-								$scope.dateAvail = true;
-							}
+						} else if(data.status === 'unavailable') {
+							$scope.message = 'Sorry, no moving slots are available during your selected time.';
+							$scope.dateAvail = false;
+						} else if(data.status === 'open') {
+							$scope.message = '';
+							$scope.dateAvail = true;
 						}
 
 						$scope.checkingCal = false;
@@ -145,7 +186,10 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 					});
 
 				} else {
+					$scope.message = 'You have chosen a previous date and time. Please choose a date and time in the future.';
+					$scope.dateAvail = false;
 					$scope.dateInvalid = true;
+
 				}
 
 			}
@@ -155,44 +199,55 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		// Create new Move
 		$scope.create = function() {
 
-			var move;
+			// validate submitted email address
+			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+			if(re.test($scope.move.email) === false){
+				$scope.message = 'Please enter a valid email address.';
+			} else {
 
-			// append move time and costs calc to move object
-			$scope.move.costsData.hourRate = $scope.hourRate;
-			$scope.move.costsData.times = $scope.times;
+				$scope.message = '';
 
-			// Create new Move object
-			if(typeof $scope.move._id === 'undefined'){
+				var move;
 
-				move = new Moves($scope.move);
+				// append move time and costs calc to move object
+				$scope.move.costsData.hourRate = $scope.hourRate;
 
-				// Redirect after save
-				move.$save(function(response) {
-					//$location.path('moves/' + response._id);
+				$scope.move.costsData.times = $scope.times;
 
-					// load newly saved move
-					$scope.move = Moves.get({
-						moveId: response._id
+				// Create new Move object
+				if(typeof $scope.move._id === 'undefined'){
+
+					move = new Moves($scope.move);
+
+					// Redirect after save
+					move.$save(function(response) {
+						//$location.path('moves/' + response._id);
+
+						// load newly saved move
+						$scope.move = Moves.get({
+							moveId: response._id
+						});
+
+						// send user to saved slide
+						$state.go('setupMove.progressSaved');
+
+						// // Clear form fields
+						// $scope.name = '';
+					}, function(errorResponse) {
+						$scope.error = errorResponse.data.message;
 					});
 
-					// send user to saved slide
-					$state.go('setupMove.progressSaved');
+				// update existing move
+				} else {
+					move = $scope.move ;
 
-					// // Clear form fields
-					// $scope.name = '';
-				}, function(errorResponse) {
-					$scope.error = errorResponse.data.message;
-				});
+					move.$update(function() {
+						$location.path('moves/' + move._id);
+					}, function(errorResponse) {
+						$scope.error = errorResponse.data.message;
+					});
+				}
 
-			// update existing move
-			} else {
-				move = $scope.move ;
-
-				move.$update(function() {
-					$location.path('moves/' + move._id);
-				}, function(errorResponse) {
-					$scope.error = errorResponse.data.message;
-				});
 			}
 		};
 
@@ -325,16 +380,11 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				if(key === 'moveType'){
 					switch(value){
 						case 'xsmall':
-							$scope.times.mins += 90;
-						break;
 						case 'small':
-							$scope.times.mins += 150;
-						break;
 						case 'medium':
-							$scope.times.mins += 210;
+							$scope.hourRate = 129;
 						break;
 						case 'large':
-							$scope.times.mins += 300;
 							$scope.hourRate = 145;
 						break;
 					}
@@ -468,6 +518,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 	    }).
 			success(function(data, status, headers, config) {
 				$scope.move.startInfo = data;
+				$scope.times.startTravelMins = (data.durationValue / 60);
 			});
 
 		};
@@ -480,6 +531,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 	    }).
 			success(function(data, status, headers, config) {
 				$scope.move.destinationInfo = data;
+				$scope.times.destTravelMins = (data.durationValue / 60);
 			});
 
 		};

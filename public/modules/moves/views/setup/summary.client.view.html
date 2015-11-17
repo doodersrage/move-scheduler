@@ -2,7 +2,7 @@
     <div class="jumbotron text-center">
       <p style="text-align:center">
         On {{move.selDate | amDateFormat:'MM/DD/YYYY'}} at {{move.selDate | amDateFormat:'hh:mm A'}} you would like to reserve a {{move.moveType}} <br>
-        move from {{move.primaryAccess}} {{move.startInfo.destination}} to {{move.deliveryAccess}} {{getDestText()}}, <br>
+        move from {{move.tobemoved}} {{move.startInfo.destination}} to {{move.movingToType}} {{getDestText()}}, <br>
         starting around time selected.<br>
         We have noted a few obstacles worth mentioning that<br>
         may add a little time. Your move is estimated to take <br>
