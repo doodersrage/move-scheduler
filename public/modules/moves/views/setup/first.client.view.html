@@ -28,7 +28,8 @@
 		    </div>
     </label>
 	</p>
-	<p>
+	<div ng-show="move.moveType">
+		<p>
       On, before or after
     </p>
 		<div class="input-group">
@@ -36,32 +37,33 @@
 				<select class="form-control" ng-model="move.selTimeDay">
 					<option value="morning">Morning (9am-1pm)</option>
 					<option value="afternoon">Afternoon (1pm-9pm)</option>
-				</select>
+					</select>
+				</div>
 			</div>
-		</div>
-		<p>
-			On the date of
-		</p>
-    <div class="input-group">
-			<div style="display:inline-block;">
-				<datepicker ng-model="move.selDate" show-weeks="false" class="well well-sm"></datepicker>
+			<p>
+				On the date of
+			</p>
+	    <div class="input-group">
+				<div style="display:inline-block;">
+					<datepicker ng-model="move.selDate" show-weeks="false" class="well well-sm"></datepicker>
+		    </div>
 	    </div>
-    </div>
-		<div ng-show="checkingCal">
-			<h3>Currently checking our calendar, please be patient.</h3>
+			<div ng-show="checkingCal">
+				<h3>Currently checking our calendar, please be patient.</h3>
+			</div>
+			<div ng-if="move.selDate && move.selTimeDay">
+				<a class="btn btn-primary btn-lg" ng-click="checkDate()">
+	        Check Availability
+	      </a>
+			</div>
+			<div ng-if="message">
+				{{message}}
+			</div>
+	    <p style="text-align:right" ng-if="move.moveType && dateAvail === true">
+	      Congratulations! Your selected date and time is available!
+				<a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
+	        Next Step
+	      </a>
+	    </p>
 		</div>
-		<div ng-if="move.selDate && move.selTimeDay">
-			<a class="btn btn-primary btn-lg" ng-click="checkDate()">
-        Check Availability
-      </a>
-		</div>
-		<div ng-if="message">
-			{{message}}
-		</div>
-    <p style="text-align:right" ng-if="move.moveType && dateAvail === true">
-      Congratulations! Your selected date and time is available!
-			<a class="btn btn-primary btn-lg" ng-click="nextStep('moveTypeDate')">
-        Next Step
-      </a>
-    </p>
 	</div>

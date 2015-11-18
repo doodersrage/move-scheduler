@@ -502,6 +502,18 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 					}
 				}
 
+				// update time total based on big stuff selections
+				if(key === 'bigStuff'){
+					switch(value){
+						case 'You plan to move some pictures, fragiles and the TV in your car?':
+							$scope.times.mins = $scope.times.mins * 0.85;
+						break;
+						case 'You plan to take everything that you can possibly carry, leaving us with the large 2 man pieces?':
+							$scope.times.mins = $scope.times.mins * 0.7;
+						break;
+					}
+				}
+
 				// calc hours on final loop
 				$scope.times.hours = money_round(($scope.times.mins / 60));
 
