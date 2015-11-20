@@ -372,6 +372,22 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			$scope.times.hours = 0;
 			var roomsMins = 0;
 
+			// factor in travel times
+			// add travel time to original location
+			if($scope.times.startTravelMins){
+				$scope.times.mins += $scope.times.startTravelMins;
+			}
+			// add travel time from original location to delivery address
+			if($scope.move.deliveryAddressDistance){
+				$scope.times.mins += $scope.move.deliveryAddressDistance;
+			}
+			// add destination travel time
+			if($scope.times.startTravelMins > 0){
+				$scope.times.mins += $scope.times.startTravelMins;
+			} else {
+				$scope.times.mins += $scope.move.destinationAddressDistance;
+			}
+
 			// walk through move vals
 			angular.forEach($scope.move, function(value, key) {
 
