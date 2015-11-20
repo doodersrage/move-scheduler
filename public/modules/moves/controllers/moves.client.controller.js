@@ -1,8 +1,8 @@
 'use strict';
 
 // Moves controller
-angular.module('moves').controller('MovesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Moves', '$state', '$http',
-	function($scope, $stateParams, $location, Authentication, Moves, $state, $http ) {
+angular.module('moves').controller('MovesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Moves', '$state', '$http', '$window',
+	function($scope, $stateParams, $location, Authentication, Moves, $state, $http, $window ) {
 		$scope.authentication = Authentication;
 
 		// controller vars
@@ -61,6 +61,23 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			hours: 0
 		};
 
+		// trigger save event on window close
+		window.onbeforeunload = function(e) {
+		    e = e || window.event;
+		    e.preventDefault = true;
+		    e.cancelBubble = true;
+		    e.returnValue = 'Save your progress before you leave?';
+
+				$state.go('setupMove.saveProgress');
+		}
+		// window.onbeforeunload = function(event) {
+		// 	var answer = confirm('Would you like to save your progress?');
+    // 	if(answer){
+		// 		$location.path('moves/setup/save-progress');
+		// 	};
+  	// };
+
+		// round dollar amt
 		var money_round = function(num) {
 		    return Math.ceil(num * 100) / 100;
 		};
@@ -118,15 +135,13 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 						// lookup geo data
 						$http.post('/moves/geoLookup', {
-					        lat: $scope.geoPosition.coords.latitude,
-									lon: $scope.geoPosition.coords.longitude
+			        lat: $scope.geoPosition.coords.latitude,
+							lon: $scope.geoPosition.coords.longitude
 				    }).
 						success(function(data, status, headers, config) {
 							$scope.lookingup = 0;
 							$scope.move.startZip = data[0].zipcode;
-
 							$scope.getStartInfo();
-
 						});
 
 		      });
