@@ -16,6 +16,11 @@ var MoveSchema = new Schema({
 		required: 'Please fill Move email',
 		trim: true
 	},
+	selTimeDay: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	selDate: {
 		type: Date,
 		default: new Date()
