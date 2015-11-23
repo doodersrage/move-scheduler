@@ -12,6 +12,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.dateAvail = false;
 		$scope.dateInvalid = false;
 		$scope.checkingCal = false;
+		$scope.objEntCnt = 0;
 		// init new move object
 		$scope.move = {
 			email: '',
@@ -380,12 +381,23 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		};
 
 		// calc move time
+		$scope.getEntCnt = function(){
+			$scope.objEntCnt = 0;
+			// walk through move vals
+			angular.forEach($scope.move, function(value, key) {
+				$scope.objEntCnt++;
+			});
+		};
 		$scope.calcMoveTime = function(){
+
+			// get obj entity count
+			$scope.getEntCnt();
 
 			// reset counts
 			$scope.times.mins = 0;
 			$scope.times.hours = 0;
 			var roomsMins = 0;
+			var idxCnt = 0;
 
 			// factor in travel times
 			// add travel time to original location
@@ -533,9 +545,14 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 					}
 				}
 
-				// update time total based on big stuff selections
-				if(key === 'bigStuff'){
-					switch(value){
+				// apply final time calc values
+				console.log($scope.objEntCnt);
+				console.log(idxCnt+1);
+				if($scope.objEntCnt === (idxCnt+1)){
+
+					var bSVal = $scope.move.bigStuff;
+
+					switch(bSVal){
 						case 'You plan to move some pictures, fragiles and the TV in your car?':
 							$scope.times.mins = $scope.times.mins * 0.85;
 						break;
@@ -543,12 +560,17 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 							$scope.times.mins = $scope.times.mins * 0.7;
 						break;
 					}
+
+					// calc hours on final loop
+					$scope.times.hours = money_round(($scope.times.mins / 60));
+
 				}
 
-				// calc hours on final loop
-				$scope.times.hours = money_round(($scope.times.mins / 60));
+				// incr
+				idxCnt++;
 
 			});
+
 
 		};
 
