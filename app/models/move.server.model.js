@@ -141,6 +141,9 @@ var MoveSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	times: {
+		type: Object
+	},
 	created: {
 		type: Date,
 		default: Date.now

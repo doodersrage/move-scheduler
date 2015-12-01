@@ -52,7 +52,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			primaryAccess: '',
 			primaryAccessDif: 0,
 			roomsMoving: 0,
-			costsData: {}
+			costsData: {},
+			times: {}
 		};
 		// move times
 		$scope.times = {
@@ -546,8 +547,6 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				}
 
 				// apply final time calc values
-				console.log($scope.objEntCnt);
-				console.log(idxCnt+1);
 				if($scope.objEntCnt === (idxCnt+1)){
 
 					var bSVal = $scope.move.bigStuff;
@@ -564,13 +563,15 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 					// calc hours on final loop
 					$scope.times.hours = money_round(($scope.times.mins / 60));
 
+					// save to move object
+					$scope.move.times = $scope.times;
+
 				}
 
 				// incr
 				idxCnt++;
 
 			});
-
 
 		};
 
@@ -600,6 +601,28 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			});
 
 		};
+
+		// display hours for summary
+		$scope.printEstHours = function(){
+
+			if($scope.times.hours > 1){
+			 return ($scope.times.hours - 1) + '-' + $scope.times.hours;
+			} else {
+				return $scope.times.hours;
+			}
+
+		};
+
+		$scope.setTimesOnLoad = function(){
+
+			if($scope.move.times){
+				$scope.times = $scope.move.times;
+			}
+
+		};
+		$scope.$watchCollection('move.times', function(){
+			$scope.setTimesOnLoad();
+		});
 
 	}
 ]);

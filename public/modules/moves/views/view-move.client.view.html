@@ -1,10 +1,13 @@
 <section data-ng-controller="MovesController" data-ng-init="findOne()">
-	<div class="page-header">
+	<div class="page-header" ng-if="move">
 		<h1 data-ng-bind="move.email"></h1>
 		<p>
 			Welcome back to sheduling your move for {{move.selDate | amDateFormat:'MM/DD/YYYY'}} at {{move.selDate | amDateFormat:'hh:mm A'}} you would like to reserve a {{move.moveType}} <br>
 			move from {{move.tobemoved}} {{move.startInfo.destination}} to {{move.movingToType}} {{getDestText()}}
-			starting around time selected.
+			starting around time selected.<br>
+			We have noted a few obstacles worth mentioning that<br>
+			may add a little time. Your move is estimated to take <br>
+			about <b>{{printEstHours()}}</b> hours at the hourly rate of <b>${{hourRate}}</b> and cost <b>${{calcCostEst()}}</b>.
 		</p>
 	</div>
 	<div class="pull-right">

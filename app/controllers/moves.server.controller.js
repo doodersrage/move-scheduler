@@ -40,10 +40,11 @@ var money_round = function(num) {
 };
 
 // generate save and update user move email
-var sendMoveEmail = function(req, res, move){
+var sendMoveEmail = function(req, res, move, moveID){
 
 	// gen vars
 	var destText;
+  var hoursOp;
 	var selectedDate = moment(move.selDate).format('MM/DD/YYYY');
 	var selectedTime = moment(move.selDate).format('h:mm a');
 	var estCost = money_round((move.costsData.hourRate * move.costsData.times.hours));
@@ -52,6 +53,12 @@ var sendMoveEmail = function(req, res, move){
 	} else {
 		destText = move.destinationAddressDistance + ' minutes away';
 	}
+
+  if(move.times.hours > 1){
+    hoursOp = (move.times.hours - 1) + '-' + move.times.hours;
+  } else {
+    hoursOp = move.times.hours;
+  }
 
 	// send email
 	async.waterfall([
@@ -62,6 +69,8 @@ var sendMoveEmail = function(req, res, move){
 				selectedTime: selectedTime,
 				estCost: estCost,
 				destText: destText,
+        hoursOp: hoursOp,
+        moveID: moveID,
 				url: 'http://' + req.headers.host + '/moves/' + move._id
 			}, function(err, emailHTML) {
 				done(err, emailHTML);
@@ -253,7 +262,7 @@ exports.create = function(req, res) {
 		} else {
 
 			// send move email
-			sendMoveEmail(req, res, moveExt);
+			sendMoveEmail(req, res, moveExt, String(move._id));
 
 			res.jsonp(move);
 		}
