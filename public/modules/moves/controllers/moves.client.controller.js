@@ -9,6 +9,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.host = $location.host() + ':' + $location.port();
 		$scope.message = '';
 		$scope.hourRate = 129;
+		$scope.fuelFee = 20;
 		$scope.dateAvail = false;
 		$scope.dateInvalid = false;
 		$scope.checkingCal = false;
@@ -228,6 +229,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 				// append move time and costs calc to move object
 				$scope.move.costsData.hourRate = $scope.hourRate;
+				$scope.move.costsData.fuelFee = $scope.fuelFee;
 
 				$scope.move.costsData.times = $scope.times;
 
@@ -368,7 +370,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		};
 
 		$scope.calcCostEst = function(){
-			return money_round(($scope.hourRate * $scope.times.hours));
+			return money_round(($scope.hourRate * $scope.times.hours) + $scope.fuelFee);
 		};
 
 		$scope.getDestText = function(){
@@ -433,6 +435,14 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 						break;
 					}
 				}
+
+				// update fuel fee if needed
+				if(key === 'tobemoved'){
+					if(value === 'loaded rental truck'){
+						$scope.fuelFee = 0;
+					}
+				}
+
 				// calc for rooms
 				if(key === 'roomsMoving'){
 					roomsMins += (Number(value) * 60);
@@ -613,16 +623,40 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 		};
 
+		// load set project time
 		$scope.setTimesOnLoad = function(){
 
 			if($scope.move.times){
 				$scope.times = $scope.move.times;
 			}
 
+			if($scope.move.costsData){
+				$scope.hourRate = $scope.move.costsData.hourRate;
+				$scope.fuelFee = $scope.move.costsData.fuelFee;
+			}
+
 		};
 		$scope.$watchCollection('move.times', function(){
 			$scope.setTimesOnLoad();
 		});
+
+		// check assigned disassembly values
+		$scope.checkDisassembly = function(){
+			var foundVal = false;
+
+			angular.forEach($scope.move.disassembly, function(value, key) {
+				if(value === true && foundVal === false){
+					foundVal = true;
+				}
+			});
+
+			if(foundVal === true){
+				return true;
+			} else {
+				return false;
+			}
+
+		};
 
 	}
 ]);

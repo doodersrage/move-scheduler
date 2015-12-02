@@ -6,7 +6,8 @@
         starting around time selected.<br>
         We have noted a few obstacles worth mentioning that<br>
         may add a little time. Your move is estimated to take <br>
-        about <b>{{printEstHours()}}</b> hours at the hourly rate of <b>${{hourRate}}</b> and cost <b>${{calcCostEst()}}</b>.
+        about <b>{{printEstHours()}}</b> hours at the hourly rate of <b>${{hourRate}}</b> and cost <b>${{calcCostEst()}}</b>
+        <span ng-if="fuelFee > 0">(includes $20 fuel fee)</span>. This price includes ALL insurance materials and fees.
       </p>
       <p>
         <!--<a class="btn btn-primary btn-lg" ui-sref="setupMove.patioFurnitureOptions">

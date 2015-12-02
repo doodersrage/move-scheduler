@@ -11,7 +11,10 @@
       </div>
     </div>
     <p style="text-align:right" ng-show="move.disassembly">
-      <a class="btn btn-primary btn-lg" ui-sref="setupMove.extDisassemblyHours">
+      <a ng-if="checkDisassembly() === true" class="btn btn-primary btn-lg" ui-sref="setupMove.extDisassemblyHours">
+        Next Step
+      </a>
+      <a ng-if="checkDisassembly() === false" class="btn btn-primary btn-lg" ui-sref="setupMove.estimate">
         Next Step
       </a>
     </p>
