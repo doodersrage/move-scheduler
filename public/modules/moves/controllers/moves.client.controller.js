@@ -440,6 +440,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				if(key === 'tobemoved'){
 					if(value === 'loaded rental truck'){
 						$scope.fuelFee = 0;
+					} else {
+						$scope.fuelFee = 20;
 					}
 				}
 
