@@ -212,6 +212,16 @@ angular.module('moves').config(['$stateProvider',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/progress-saved.client.view.html'
 		}).
+		state('setupMove.bookMove', {
+			url: '/book-move',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/book-move.client.view.html'
+		}).
+		state('setupMove.booked', {
+			url: '/booked',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/booked.client.view.html'
+		}).
 		state('setupMove.goodBye', {
 			url: '/good-bye',
 			parent: 'setupMove',

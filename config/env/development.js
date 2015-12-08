@@ -35,7 +35,7 @@ module.exports = {
 		callbackURL: 'http://localhost:3001/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'no-reply@studiocenterauditions.com',
+		from: process.env.MAILER_FROM || 'moxiemovers@gmail.com',
 		options: {
 		    auth: {
 		        api_key: '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'

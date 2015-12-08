@@ -137,12 +137,17 @@ var MoveSchema = new Schema({
 		default: 0
 	},
 	costsData: {
-		type: String,
-		default: '',
-		trim: true
+		type: Object
 	},
 	times: {
 		type: Object
+	},
+	contact: {
+		type: Object
+	},
+	booked: {
+		type: Boolean,
+		default: false
 	},
 	created: {
 		type: Date,

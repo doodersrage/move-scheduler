@@ -43,21 +43,35 @@ var money_round = function(num) {
 var sendMoveEmail = function(req, res, move, moveID){
 
 	// gen vars
-	var destText;
-  var hoursOp;
+	var destText, hoursOp, contactStr;
 	var selectedDate = moment(move.selDate).format('MM/DD/YYYY');
 	var selectedTime = moment(move.selDate).format('h:mm a');
-	var estCost = money_round((move.costsData.hourRate * move.costsData.times.hours));
+  // set estimate cost
+	var estCost = money_round((move.costsData.hourRate * move.costsData.times.hours) + (move.costsData.fuelFee ? move.costsData.fuelFee : 0));
+  // set destination text
 	if(move.destinationZip){
 		destText = move.destinationInfo.destination;
 	} else {
 		destText = move.destinationAddressDistance + ' minutes away';
 	}
 
+  // gen hours output
   if(move.times.hours > 1){
     hoursOp = (move.times.hours - 1) + '-' + move.times.hours;
   } else {
     hoursOp = move.times.hours;
+  }
+
+  // gen customer contact info string
+  if(move.contact.firstName && move.contact.lastName){
+    contactStr = '<p>' + move.contact.firstName + ' ' + move.contact.lastName + '<br>';
+    contactStr += move.contact.phone + '<br>';
+    contactStr += move.contact.email + '<br>';
+    contactStr += move.contact.address + '<br>';
+    if(move.contact.address2 !== '') {
+      contactStr += move.contact.address2 + '<br>';
+    }
+    contactStr += move.contact.city + ', ' + move.contact.state  + ' ' + move.contact.zip + '</p>';
   }
 
 	// send email
@@ -71,6 +85,7 @@ var sendMoveEmail = function(req, res, move, moveID){
 				destText: destText,
         hoursOp: hoursOp,
         moveID: moveID,
+        contactStr: contactStr,
 				url: 'http://' + req.headers.host + '/moves/' + move._id
 			}, function(err, emailHTML) {
 				done(err, emailHTML);
@@ -381,6 +396,36 @@ exports.getDestinationInfo = function(req, res, next){
     if (err) return console.log(err);
 		// return found data
 		res.jsonp(data);
+	});
+
+};
+
+// book move to calendar and save to database
+exports.bookMove = function(req, res){
+
+  // create local var for move data
+  var move = new Move(req.body.move);
+
+  // update booked Boolean
+  move.booked = true;
+
+  // add move to calendar
+  // client still deciding
+
+  // save move object to db
+  move.save(function(err) {
+		if (err) {
+      console.log(err);
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+
+			// send move email
+			sendMoveEmail(req, res, move);
+
+			res.jsonp(move);
+		}
 	});
 
 };

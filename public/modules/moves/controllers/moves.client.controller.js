@@ -54,7 +54,17 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			primaryAccessDif: 0,
 			roomsMoving: 0,
 			costsData: {},
-			times: {}
+			times: {},
+			contact: {
+				firstName: '',
+				lastName: '',
+				phone: '',
+				address: '',
+				address2: '',
+				city: '',
+				state: '',
+				zip: ''
+			}
 		};
 		// move times
 		$scope.times = {
@@ -592,7 +602,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.getStartInfo = function(){
 
 			$http.post('/moves/getStartInfo', {
-		        destZip: $scope.move.startZip
+        destZip: $scope.move.startZip
 	    }).
 			success(function(data, status, headers, config) {
 				$scope.move.startInfo = data;
@@ -656,6 +666,53 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				return true;
 			} else {
 				return false;
+			}
+
+		};
+
+		// book customers move
+		$scope.bookMove = function(){
+
+			// validate submitted email address and ensure required fields are not blank
+			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+			if(re.test($scope.move.email) === false &&
+				$scope.move.contact.firstName === '' &&
+				$scope.move.contact.lastName === '' &&
+				$scope.move.contact.phone === '' &&
+				$scope.move.email === '' &&
+				$scope.move.contact.address === '' &&
+				$scope.move.contact.city === '' &&
+				$scope.move.contact.state === '' &&
+				$scope.move.contact.zip === ''
+			){
+				$scope.message = 'Please enter a valid email address and make sure that all required fields have been populated.';
+			} else {
+
+				// clear user warning message
+				$scope.message = '';
+
+				// init vars
+				var move;
+
+				// append move time and costs calc to move object
+				$scope.move.costsData.hourRate = $scope.hourRate;
+				$scope.move.costsData.fuelFee = $scope.fuelFee;
+				$scope.move.costsData.times = $scope.times;
+
+				// Create new Move object
+				$http.post('/moves/bookMove', {
+					move: $scope.move
+		    })
+				// redirect to thanks page
+				.success(function(data, status, headers, config) {
+					$scope.move = data;
+					$state.go('setupMove.booked');
+				})
+				// alert user of the problem
+				.error(function(data){
+					$scope.message = 'There was a problem attempting to book your move.';
+				});
+
 			}
 
 		};

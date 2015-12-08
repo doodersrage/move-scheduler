@@ -9,3 +9,7 @@
   about <b>{{hoursOp}}</b> hours at the hourly rate of <b>${{move.costsData.hourRate}}</b> and cost <b>${{estCost}}</b>. This price includes ALL insurance materials and fees.<br>
   <a href="http://mm.studiocenter.com/#!/moves/{{moveID}}">http://mm.studiocenter.com/#!/moves/{{moveID}}</a>
 </p>
+<p>
+  Booked: {{move.booked}}
+</p>
+{% autoescape false %}{{contactStr}}{% endautoescape %}

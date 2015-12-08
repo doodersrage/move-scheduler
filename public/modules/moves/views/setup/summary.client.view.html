@@ -9,16 +9,29 @@
         about <b>{{printEstHours()}}</b> hours at the hourly rate of <b>${{hourRate}}</b> and cost <b>${{calcCostEst()}}</b>
         <span ng-if="fuelFee > 0">(includes $20 fuel fee)</span>. This price includes ALL insurance materials and fees.
       </p>
-      <p>
-        <!--<a class="btn btn-primary btn-lg" ui-sref="setupMove.patioFurnitureOptions">
-          Reserve the date with a refundable deposit
-        </a>-->
-        <p><a class="btn btn-primary btn-lg" ui-sref="setupMove.saveProgress">
-          Receive a Bookmark and save your progress
-        </a></p>
-        <p><a class="btn btn-primary btn-lg" ui-sref="setupMove.offEstimate">
-          That’s more than I was expecting
-        </a></p>
-      </p>
+      <!--<a class="btn btn-primary btn-lg" ui-sref="setupMove.patioFurnitureOptions">
+        Reserve the date with a refundable deposit
+      </a>-->
+      <div ng-if="times.hours < 10">
+        <p>
+          <a class="btn btn-primary btn-lg" ui-sref="setupMove.saveProgress">
+            Receive a Bookmark and save your progress
+          </a>
+          OR
+          <a class="btn btn-primary btn-lg" ui-sref="setupMove.bookMove">
+            Book my move!
+          </a>
+        </p>
+        <p>
+          <a class="btn btn-primary btn-lg" ui-sref="setupMove.offEstimate">
+            That’s more than I was expecting
+          </a>
+        </p>
+      </div>
+      <div ng-if="times.hours >= 10">
+        <p>
+          We might have trouble scheduling your move. Please give us a call ( 804-928-1111 ) to help us work out the details.
+        </p>
+      </div>
     </div>
   </div>
