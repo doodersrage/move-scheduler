@@ -10,6 +10,16 @@
 			about <b>{{printEstHours()}}</b> hours at the hourly rate of <b>${{hourRate}}</b> and cost <b>${{calcCostEst()}}</b>
 			<span ng-if="fuelFee > 0">(includes $20 fuel fee)</span>. This price includes ALL insurance materials and fees.
 		</p>
+		<div ng-if="move.booked == true">
+			<p>
+				{{move.contact.firstName}} {{move.contact.lastName}}<br>
+		    {{move.contact.phone}}<br>
+		    {{move.contact.email}}<br>
+		    {{move.contact.address}}<br>
+	      {{move.contact.address2}}<br>
+		    {{move.contact.city}}, {{move.contact.state}} {{move.contact.zip}}
+			</p>
+		</div>
 	</div>
 	<div class="pull-right">
 		<a class="btn btn-primary" ui-sref="setupMove.first({id: move._id})">
