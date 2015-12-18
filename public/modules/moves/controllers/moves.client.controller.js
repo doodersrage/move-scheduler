@@ -63,7 +63,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 				address2: '',
 				city: '',
 				state: '',
-				zip: ''
+				zip: '',
+				comment: ''
 			}
 		};
 		// move times
