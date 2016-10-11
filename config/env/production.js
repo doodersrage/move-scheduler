@@ -63,7 +63,7 @@ module.exports = {
 		from: process.env.MAILER_FROM || 'moxiemovers@gmail.com',
 		options: {
 		    auth: {
-		        api_key: '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'
+		        api_key: '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'
 		    }
 		}
 	}

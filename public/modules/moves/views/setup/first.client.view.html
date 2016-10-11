@@ -40,18 +40,7 @@
 					</select>
 				</div>
 			</div>
-			<p>
-				On the date of
-			</p>
-	    <div class="input-group">
-				<div style="display:inline-block;">
-					<datepicker ng-model="move.selDate" show-weeks="false" class="well well-sm"></datepicker>
-		    </div>
-	    </div>
-			<div ng-show="checkingCal">
-				<h3>Currently checking our calendar, please be patient.</h3>
-			</div>
-			<div ng-if="move.selDate && move.selTimeDay">
+			<div ng-if="move.selTimeDay">
 				<a class="btn btn-primary btn-lg" ng-click="checkDate()">
 	        Check Availability
 	      </a>

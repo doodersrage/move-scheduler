@@ -18,7 +18,6 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.move = {
 			email: '',
 			selTimeDay: 'morning',
-			selDate: new Date(),
 			moveType: '',
 			startZip: '',
 			startInfo: {},
@@ -83,7 +82,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		    e.returnValue = 'Save your progress before you leave?';
 
 				$state.go('setupMove.saveProgress');
-		}
+		};
 		// window.onbeforeunload = function(event) {
 		// 	var answer = confirm('Would you like to save your progress?');
     // 	if(answer){
@@ -171,57 +170,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		// check selected date and time for available options
 		$scope.checkDate = function(){
 
-			if($scope.move.selDate){
-
-				if($scope.move.selDate > new Date()){
-
-					$scope.checkingCal = true;
-
-					$scope.dateInvalid = false;
-
-					// convert selected date and time
-					var usrSelDateTime = new Date($scope.move.selDate);
-
-					// reset selected date hours based on selected date part
-					usrSelDateTime.setMinutes(0);
-					usrSelDateTime.setSeconds(0);
-					if($scope.move.selTimeDay === 'morning'){
-						usrSelDateTime.setHours(9);
-					} else {
-						usrSelDateTime.setHours(13);
-					}
-
-					// lookup geo data
-					$http.post('/moves/checkCalendar', {
-								selDate: usrSelDateTime
-					}).
-					success(function(data, status, headers, config) {
-						if(data.status === 'Error'){
-							$scope.message = data.status + 'determining assigned moving data. Please try again shortly.';
-							$scope.dateAvail = false;
-						} else if(data.status === 'No upcoming events found.') {
-							$scope.message = '';
-							$scope.dateAvail = true;
-						} else if(data.status === 'unavailable') {
-							$scope.message = 'Sorry, no moving slots are available during your selected time.';
-							$scope.dateAvail = false;
-						} else if(data.status === 'open') {
-							$scope.message = '';
-							$scope.dateAvail = true;
-						}
-
-						$scope.checkingCal = false;
-
-					});
-
-				} else {
-					$scope.message = 'You have chosen a previous date and time. Please choose a date and time in the future.';
-					$scope.dateAvail = false;
-					$scope.dateInvalid = true;
-
-				}
-
-			}
+			$scope.message = '';
+			$scope.dateAvail = true;
 
 		};
 
