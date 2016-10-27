@@ -1,12 +1,7 @@
   <div class="row" data-ng-init="calcMoveTime()">
     <div class="jumbotron text-center">
       <p style="text-align:center">
-        On {{move.selDate | amDateFormat:'MM/DD/YYYY'}} at {{move.selDate | amDateFormat:'hh:mm A'}} you would like to reserve a {{move.moveType}} <br>
-        move from {{move.tobemoved}} {{move.startInfo.destination}} to {{move.movingToType}} {{getDestText()}}, <br>
-        starting around time selected.<br>
-        We have noted a few obstacles worth mentioning that<br>
-        may add a little time. Your move is estimated to take <br>
-        about <b>{{printEstHours()}}</b> hours at the hourly rate of <b>${{hourRate}}</b> and cost <b>${{calcCostEst()}}</b>
+          I would estimate your move to take about <b>{{printEstHours()}}</b> hours and cost around <b>${{calcCostEst()}}</b> dollars.
         <span ng-if="fuelFee > 0">(includes $20 fuel fee)</span>. This price includes ALL insurance materials and fees.
       </p>
       <!--<a class="btn btn-primary btn-lg" ui-sref="setupMove.patioFurnitureOptions">
@@ -14,10 +9,10 @@
       </a>-->
       <div ng-if="times.hours < 10">
         <p>
-          <a class="btn btn-primary btn-lg" ui-sref="setupMove.saveProgress">
+          <!--<a class="btn btn-primary btn-lg" ui-sref="setupMove.saveProgress">
             Receive a Bookmark and save your progress
           </a>
-          OR
+          OR-->
           <a class="btn btn-primary btn-lg" ui-sref="setupMove.bookMove">
             Book my move!
           </a>

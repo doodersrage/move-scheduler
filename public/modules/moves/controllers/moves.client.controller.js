@@ -19,8 +19,10 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			email: '',
 			selTimeDay: 'morning',
 			moveType: '',
+			startSteepDriveway: 0,
 			startZip: '',
 			startInfo: {},
+			destSteepDriveway: 0,
 			destinationZip: '',
 			destinationAddressDistance: 0,
 			destinationInfo: {},
@@ -47,6 +49,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			garage: '',
 			movingToType: '',
 			patioFurniture: '',
+			paino: 0,
 			shed: '',
 			tobemoved: '',
 			primaryAccess: '',
@@ -331,7 +334,12 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		};
 
 		$scope.calcCostEst = function(){
-			return money_round(($scope.hourRate * $scope.times.hours) + $scope.fuelFee);
+			var calcCost = ($scope.hourRate * $scope.times.hours) + $scope.fuelFee;
+				if($scope.move.piano === 1){
+					calcCost += 120;
+				}
+				calcCost = money_round(calcCost);
+			return calcCost;
 		};
 
 		$scope.getDestText = function(){

@@ -24,9 +24,18 @@
         Estimated travel time: {{move.startInfo.duration}}
       </div>
     </div>
-    <p style="text-align:right" ng-show="move.startInfo.duration">
-      <a class="btn btn-primary btn-lg" ui-sref="setupMove.deliveryAddressDistance">
-        Next Step
-      </a>
-    </p>
-  </div>
+    <div class="row">
+      <div class="col-md-offset-9 col-md-4">
+        <p style="text-align:right" ng-show="move.startInfo.duration">
+          <label>Is there a steep driveway at this location?</label>
+          <select data-ng-model="move.startSteepDriveway" class="form-control">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+          <a class="btn btn-primary btn-lg" ui-sref="setupMove.deliveryAddressDistance">
+            Next Step
+          </a>
+        </p>
+      </div>
+    </div>
+</div>

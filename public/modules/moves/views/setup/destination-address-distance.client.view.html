@@ -51,9 +51,18 @@
         </div>
       </div>
     </div>
-    <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationInfo.duration">
-      <a class="btn btn-primary btn-lg" ui-sref="setupMove.toBeMoved">
-        Next Step
-      </a>
-    </p>
+    <div class="row">
+      <div class="col-md-offset-9 col-md-4">
+        <p style="text-align:right" ng-show="move.destinationAddressDistance || move.destinationInfo.duration">
+          <label>Is there a steep driveway at this location?</label>
+          <select data-ng-model="move.destSteepDriveway" class="form-control">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+          <a class="btn btn-primary btn-lg" ui-sref="setupMove.toBeMoved">
+            Next Step
+          </a>
+        </p>
+      </div>
+    </div>
   </div>

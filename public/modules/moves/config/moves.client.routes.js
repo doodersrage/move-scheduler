@@ -177,6 +177,11 @@ angular.module('moves').config(['$stateProvider',
 			parent: 'setupMove',
 			templateUrl: 'modules/moves/views/setup/shed-options.client.view.html'
 		}).
+		state('setupMove.piano', {
+			url: '/piano',
+			parent: 'setupMove',
+			templateUrl: 'modules/moves/views/setup/piano.client.view.html'
+		}).
 		state('setupMove.patioFurniture', {
 			url: '/patio-furniture',
 			parent: 'setupMove',
