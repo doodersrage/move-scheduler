@@ -6,7 +6,7 @@
         <a data-ng-repeat="move in moves" data-ng-href="#!/moves/{{move._id}}" class="list-group-item">
           <h3>{{move.email}}</h3>
           <p>
-      			Sheduling a move for {{move.selDate | amDateFormat:'MM/DD/YYYY'}} at {{move.selDate | amDateFormat:'hh:mm A'}} you would like to reserve a {{move.moveType}} <br>
+      			Sheduling a move you would like to reserve a {{move.moveType}} <br>
       			move from {{move.tobemoved}} {{move.startInfo.destination}} to {{move.movingToType}} {{getDestText()}}
       			starting around time selected.
       		</p>

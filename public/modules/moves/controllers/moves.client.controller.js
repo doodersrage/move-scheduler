@@ -10,7 +10,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 		$scope.message = '';
 		$scope.hourRate = 129;
 		$scope.fuelFee = 20;
-		$scope.dateAvail = false;
+		$scope.dateAvail = true;
 		$scope.dateInvalid = false;
 		$scope.checkingCal = false;
 		$scope.objEntCnt = 0;
@@ -294,7 +294,7 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 					// add code to check availability here
 
 					// call correct state
-					$state.go('setupMove.available');
+					$state.go('setupMove.location');
 
 				break;
 			}
