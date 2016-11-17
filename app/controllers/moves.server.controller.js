@@ -81,7 +81,7 @@ var sendMoveEmail = function(req, res, move, moveID){
 				move: move,
 				selectedDate: selectedDate,
 				selectedTime: selectedTime,
-        estCostMin: (estCost-130),
+        estCostMin: money_round((estCost-130)),
         estCost: estCost,
 				destText: destText,
         hoursOp: hoursOp,
