@@ -1,11 +1,10 @@
   <div class="row" data-ng-init="calcMoveTime()">
     <div class="jumbotron text-center">
       <p style="text-align:center">
-          I would estimate your move to take about <b>{{printEstHours()}}</b> hours and cost around <b>${{calcCostEst()}}</b> dollars.
-        <span ng-if="fuelFee > 0">(includes $20 fuel fee)</span>. This price includes ALL insurance materials and fees.
-      </p>
-      <p style="text-align:center">
         Your move is estimated to cost <b>{{printEstHours()}}</b> hours and cost <b>${{calcCostEstMin()}}</b>-<b>${{calcCostEst()}}</b>  There is a two hour minimum after which we will prorate to the fraction of the hour.  The estimate is not binding in any way, you will only pay for the time you use.  If we have already spoken on the phone, follow the link below to proceed with your reservation.  If we have not spoken, please call to check availability.  If more than 4 hours pass, you may want to check that the date we discussed is still available.  Reservations are first come, first served.
+      </p>
+      <p>
+      Please click this link to enter your reservation: <a target="_blank" href="http://www.moxiemovers.com/reservations-1.html">http://www.moxiemovers.com/reservations-1.html</a>
       </p>
       <!--<a class="btn btn-primary btn-lg" ui-sref="setupMove.patioFurnitureOptions">
         Reserve the date with a refundable deposit
@@ -17,7 +16,7 @@
           </a>
           OR-->
           <a class="btn btn-primary btn-lg" ui-sref="setupMove.bookMove">
-            Book my move!
+            Save my move quote for later retrieval
           </a>
         </p>
         <p>
