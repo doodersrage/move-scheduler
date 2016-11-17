@@ -342,6 +342,16 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 			return calcCost;
 		};
 
+		$scope.calcCostEstMin = function(){
+			var calcCost = ($scope.hourRate * $scope.times.hours) + $scope.fuelFee;
+				if($scope.move.piano === 1){
+					calcCost += 120;
+				}
+				calcCost -= 130;
+				calcCost = money_round(calcCost);
+			return calcCost;
+		};
+
 		$scope.getDestText = function(){
 
 			if($scope.move.destinationZip){
@@ -634,17 +644,8 @@ angular.module('moves').controller('MovesController', ['$scope', '$stateParams',
 
 			// validate submitted email address and ensure required fields are not blank
 			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-			if(re.test($scope.move.email) === false &&
-				$scope.move.contact.firstName === '' &&
-				$scope.move.contact.lastName === '' &&
-				$scope.move.contact.phone === '' &&
-				$scope.move.email === '' &&
-				$scope.move.contact.address === '' &&
-				$scope.move.contact.city === '' &&
-				$scope.move.contact.state === '' &&
-				$scope.move.contact.zip === ''
-			){
-				$scope.message = 'Please enter a valid email address and make sure that all required fields have been populated.';
+			if(re.test($scope.move.email) === false){
+				$scope.message = 'Please enter a valid email address.';
 			} else {
 
 				// clear user warning message
